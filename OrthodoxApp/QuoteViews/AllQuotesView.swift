@@ -12,7 +12,7 @@ struct AllQuotesView: View {
                 TabView {
                     ForEach(allQuotes) { quote in
                         QuoteCardView(quote: quote, viewModel: viewModel)
-                            .padding(.bottom, (100))
+                            .padding(.bottom, (75))
                     }
                     .rotationEffect(.degrees(-90)) // Rotate content
                     .frame(

@@ -9,7 +9,8 @@ struct QuoteCardView: View {
         VStack(alignment: .leading, spacing: 16) {
             // Quote text
             Text("\"\(quote.quote)\"")
-                .font(.body)
+                .font(.title2)
+                .fontWeight(.semibold)
                 .multilineTextAlignment(.leading)
                 .padding(.top, 8)
             
@@ -19,17 +20,15 @@ struct QuoteCardView: View {
                     .frame(width: 30, height: 1)
                 
                 Text("- \(quote.author)")
-                    .font(.subheadline)
+                    .font(.title3)
+                    .fontWeight(.semibold)
                     .foregroundColor(.secondary)
             }
             
-            HStack{
-                VStack{ // Favorites
-                    FavoriteButton(quote: quote, viewModel: viewModel)
-                    PrintFavorites(viewModel: viewModel)
-                    ClearFavorites(viewModel: viewModel)
-                }
-            }
+            QuoteCardButtonsView (
+                viewModel: viewModel,
+                quote: quote
+            )
             
             
         }
@@ -37,7 +36,7 @@ struct QuoteCardView: View {
         .frame(maxWidth: .infinity)
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .stroke(Color(.label).opacity(0.3), lineWidth: 1)
+                .stroke(Color(.label).opacity(0.3), lineWidth: 3)
         )
         .padding(.horizontal)
     }

@@ -14,23 +14,11 @@ struct QuotesScreen: View {
     var body: some View {
         VStack(spacing: 0) {
             // Custom tab indicator
-            HStack(spacing: 0) {
-                Text("All")
-                    .fontWeight(currentTab == 0 ? .bold : .regular)
-                    .foregroundColor(currentTab == 0 ? .primary : .secondary)
-                    .frame(maxWidth: .infinity)
-                
-                Rectangle()
-                    .frame(width: 1, height: 20)
-                    .foregroundColor(.gray)
-                    .frame(maxWidth: .infinity)
-                
-                Text("Favorites")
-                    .fontWeight(currentTab == 1 ? .bold : .regular)
-                    .foregroundColor(currentTab == 1 ? .primary : .secondary)
-                    .frame(maxWidth: .infinity)
-            }
-            .padding()
+            CustomTabView(
+                currentTab: $currentTab,
+                tab1: "All",
+                tab2: "Favorites"
+            )
             
             
             TabView(selection: $currentTab) {
@@ -63,4 +51,17 @@ struct QuotesScreen: View {
             .tabViewStyle(.page(indexDisplayMode: .never))
         }
     }
+}
+
+#Preview {
+    QuotesScreen(viewModel: {
+        let viewModel = QuotesViewModel()
+        // Add sample quotes
+        viewModel.allQuotes = viewModel.testQuotes
+        
+        // Add some favorite quotes
+        viewModel.favoriteQuotes = [viewModel.allQuotes[0]] // Make the first quote a favorite
+        
+        return viewModel
+    }())
 }
