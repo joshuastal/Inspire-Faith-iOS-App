@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct FavoriteButton: View {
-    
     var quote: QuoteObject
     @ObservedObject var viewModel: QuotesViewModel
     var width: CGFloat
@@ -16,26 +15,37 @@ struct FavoriteButton: View {
     
     var body: some View {
         Button {
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {  // Add animation to the action
+            withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
                 viewModel.addToFavorites(quote: quote)
             }
         } label: {
-            Image(systemName:
-                viewModel.favoriteQuotes.contains(where: { $0.quote == quote.quote && $0.author == quote.author })
-                ? "heart.fill"
-                : "heart"
-            )
-            .symbolRenderingMode(.palette)
-            .resizable()
+            // Create a container that's at least 44x44
+            ZStack {
+                // The actual heart icon remains the same size
+                Image(systemName:
+                    viewModel.favoriteQuotes.contains(where: { $0.quote == quote.quote && $0.author == quote.author })
+                    ? "heart.fill"
+                    : "heart"
+                )
+                .symbolRenderingMode(.palette)
+                .resizable()
+                .frame(
+                    width: width,
+                    height: height
+                )
+                .foregroundColor(.blue)
+                .scaleEffect(viewModel.favoriteQuotes.contains(where: { $0.quote == quote.quote && $0.author == quote.author }) ? 1.1 : 1.0)
+            }
             .frame(
-                width: width,
-                height: height
+                minWidth: 44,
+                minHeight: 44,
+                alignment: .center
             )
-            .foregroundColor(.blue)
-            .scaleEffect(viewModel.favoriteQuotes.contains(where: { $0.quote == quote.quote && $0.author == quote.author }) ? 1.1 : 1.0)  // Add scale effect
+            // Border to show clickable area
+            //.border(Color.red.opacity(0.3))
         }
         .tint(.gray)
-        .animation(.spring(response: 0.3, dampingFraction: 0.6), value: viewModel.favoriteQuotes)  // Animate based on favorites changes
+        .animation(.spring(response: 0.3, dampingFraction: 0.6), value: viewModel.favoriteQuotes)
     }
 }
 

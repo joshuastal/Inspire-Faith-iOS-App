@@ -13,12 +13,18 @@ struct ShareButton: View {
     
     var body: some View {
         ShareLink(item: "\"\(sharedQuote.quote)\" \n -\(sharedQuote.author)") {
-            Label("", systemImage: "square.and.arrow.up")
-                .font(.system(size: iconSize)) // Custom font size
+            // Instead of using Label, we'll use Image directly
+            Image(systemName: "square.and.arrow.up")
+                .font(.system(size: iconSize))
+                .symbolRenderingMode(.monochrome)
+                .foregroundStyle(Color.blue)
+            // Create a ZStack to maintain proper centering of the icon
+                .frame(width: 44, height: 44, alignment: .center)
         }
+        // Border to show clickable area
+        //.border(Color.red.opacity(0.3))
     }
 }
-
 
 
 
@@ -30,6 +36,6 @@ struct ShareButton: View {
             quote: "Lorem ipsum dolor sit amet.",
             author: "Test Quote"
         ),
-        iconSize: 40
+        iconSize: 20
     )
 }

@@ -51,9 +51,22 @@
 		423A18992D14DE5800DF3A95 /* OrthodoxAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OrthodoxAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		42CD2B8D2D1E1C3300AE187B /* Exceptions for "OrthodoxApp" folder in "OrthodoxApp" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 423A187E2D14DE5600DF3A95 /* OrthodoxApp */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		423A18812D14DE5600DF3A95 /* OrthodoxApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				42CD2B8D2D1E1C3300AE187B /* Exceptions for "OrthodoxApp" folder in "OrthodoxApp" target */,
+			);
 			path = OrthodoxApp;
 			sourceTree = "<group>";
 		};
@@ -462,6 +475,7 @@
 				DEVELOPMENT_TEAM = 97GJMP82X9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OrthodoxApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -492,6 +506,7 @@
 				DEVELOPMENT_TEAM = 97GJMP82X9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OrthodoxApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

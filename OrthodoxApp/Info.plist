@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>AvenirLTStd-Heavy.otf</string>
+		<string>AvenirLTStd-HeavyOblique.otf</string>
+		<string>AvenirLTStd-Light.otf</string>
+		<string>AvenirLTStd-LightOblique.otf</string>
+		<string>AvenirLTStd-Medium.otf</string>
+		<string>AvenirLTStd-MediumOblique.otf</string>
+		<string>AvenirLTStd-Oblique.otf</string>
+		<string>AvenirLTStd-Roman.otf</string>
+		<string>AvenirLTStd-BookOblique.otf</string>
+		<string>AvenirLTStd-Book.otf</string>
+		<string>AvenirLTStd-BlackOblique.otf</string>
+		<string>AvenirLTStd-Black.otf</string>
+	</array>
+</dict>
+</plist>

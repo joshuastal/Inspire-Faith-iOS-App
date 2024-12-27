@@ -17,10 +17,10 @@ struct QuoteCardButtonsView: View {
                 FavoriteButton(
                     quote: quote,
                     viewModel: viewModel,
-                    width: 24,
-                    height: 22
+                    width: 22,
+                    height: 20
                 )
-                .padding(10)
+                //.padding(10)
                 //PrintFavorites(viewModel: viewModel)
                 //ClearFavorites(viewModel: viewModel)
             }
@@ -30,8 +30,9 @@ struct QuoteCardButtonsView: View {
             VStack {
                 ShareButton(
                     sharedQuote: quote,
-                    iconSize: 24
-                ).padding(.bottom, 8)
+                    iconSize: 20
+                )
+                //.padding(.bottom, 8)
             }
         }
     }
