@@ -6,6 +6,11 @@ struct AllQuotesView: View {
     let allQuotes: [QuoteObject]
     let viewModel: QuotesViewModel
     
+    // Add state variables for tracking double taps
+        @State private var lastTapTime: Date = Date()
+        // Keep track of which quote is currently visible
+        @State private var currentQuoteIndex: Int = 0
+    
     var body: some View {
         ZStack {
             GeometryReader { proxy in
@@ -29,6 +34,7 @@ struct AllQuotesView: View {
                 .tabViewStyle(
                     PageTabViewStyle(indexDisplayMode: .never)
                 )
+                
             }
         }
         

@@ -7,7 +7,7 @@ import FirebaseFirestore
 struct ContentView: View {
     let db = Firestore.firestore()
     @StateObject var viewModel = QuotesViewModel() // Initialize the view model
-    @State private var defaultSelection = 2
+    @State private var defaultSelection = 1
     
     var body: some View {
         TabView(selection: $defaultSelection) {

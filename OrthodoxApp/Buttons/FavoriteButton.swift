@@ -15,6 +15,9 @@ struct FavoriteButton: View {
     
     var body: some View {
         Button {
+            
+            hapticFeedback(style: .light)
+            
             withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
                 viewModel.addToFavorites(quote: quote)
             }
