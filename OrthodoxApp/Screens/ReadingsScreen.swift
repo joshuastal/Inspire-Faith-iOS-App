@@ -10,7 +10,7 @@ import SwiftUI
 struct ReadingsScreen: View {
     var body: some View {
         NavigationView {
-            Text("Readings")
+            OrthocalView()
                 .navigationTitle("📙 Readings")
         }
     }

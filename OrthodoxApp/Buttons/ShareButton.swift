@@ -11,13 +11,15 @@ struct ShareButton: View {
     var sharedQuote: QuoteObject
     var iconSize: CGFloat
     
+    @AppStorage("accentColor") private var accentColor: Color = .blue
+    
     var body: some View {
         ShareLink(item: "\"\(sharedQuote.quote)\" \n -\(sharedQuote.author)") {
             // Instead of using Label, we'll use Image directly
             Image(systemName: "square.and.arrow.up")
                 .font(.system(size: iconSize))
                 .symbolRenderingMode(.monochrome)
-                .foregroundStyle(Color.blue)
+                .foregroundStyle(accentColor)
             // Create a ZStack to maintain proper centering of the icon
                 .frame(width: 44, height: 44, alignment: .center)
         }

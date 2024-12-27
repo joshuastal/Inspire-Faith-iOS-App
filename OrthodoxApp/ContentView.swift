@@ -6,7 +6,7 @@ import FirebaseFirestore
 
 struct ContentView: View {
     let db = Firestore.firestore()
-    @StateObject var viewModel = QuotesViewModel() // Initialize the view model
+    @StateObject var viewModel = QuotesViewModel()
     @State private var defaultSelection = 1
     
     var body: some View {
@@ -36,13 +36,11 @@ struct ContentView: View {
                 .tag(3)
         }
         .task {
-            viewModel.fetchQuotes(db: db) // Call fetchQuotes on the view model
-            print(viewModel.allQuotes)    // Print allQuotes for debugging purposes
+            viewModel.fetchQuotes(db: db)
+            print(viewModel.allQuotes)
         }
-        
     }
 }
-
 #Preview { ContentView() }
 
 

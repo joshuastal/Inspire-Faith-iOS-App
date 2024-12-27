@@ -17,11 +17,13 @@ struct OrthodoxAppApp: App {
     
     // Add theme support
     @AppStorage("appTheme") private var selectedTheme: String = AppTheme.system.rawValue
+    @AppStorage("accentColor") private var accentColor: Color = .blue
     
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .preferredColorScheme(getColorScheme())
+                .tint(accentColor)
         }
     }
     

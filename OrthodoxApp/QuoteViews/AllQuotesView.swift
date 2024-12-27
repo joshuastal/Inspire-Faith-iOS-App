@@ -35,11 +35,20 @@ struct AllQuotesView: View {
                     PageTabViewStyle(indexDisplayMode: .never)
                 )
                 
+                
+                
             }
         }
         
         
     }
+    
+    // Function to scroll to the top with animation
+        private func scrollToTop() {
+            withAnimation {
+                currentQuoteIndex = 0
+            }
+        }
 }
 
 

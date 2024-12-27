@@ -13,6 +13,8 @@ struct FavoriteButton: View {
     var width: CGFloat
     var height: CGFloat
     
+    @AppStorage("accentColor") private var accentColor: Color = .blue
+    
     var body: some View {
         Button {
             
@@ -36,7 +38,7 @@ struct FavoriteButton: View {
                     width: width,
                     height: height
                 )
-                .foregroundColor(.blue)
+                .foregroundColor(accentColor)
                 .scaleEffect(viewModel.favoriteQuotes.contains(where: { $0.quote == quote.quote && $0.author == quote.author }) ? 1.1 : 1.0)
             }
             .frame(
