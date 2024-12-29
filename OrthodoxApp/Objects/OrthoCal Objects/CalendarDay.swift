@@ -58,7 +58,7 @@ struct Reading: Codable {
 
 // MARK: - Passage
 struct Passage: Codable {
-    let book: Book
+    let book: String
     let chapter, verse: Int
     let content: String
     let paragraphStart: Bool

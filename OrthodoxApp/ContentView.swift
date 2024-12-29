@@ -7,10 +7,10 @@ import FirebaseFirestore
 struct ContentView: View {
     let db = Firestore.firestore()
     @StateObject var viewModel = QuotesViewModel()
-    @State private var defaultSelection = 1
+    @State private var selection = 1
     
     var body: some View {
-        TabView(selection: $defaultSelection) {
+        TabView(selection: $selection) {
             QuotesScreen(viewModel: viewModel)
                 .tabItem {
                     Image(systemName: "quote.bubble")
@@ -29,8 +29,7 @@ struct ContentView: View {
             
             ReadingsScreen()
                 .tabItem {
-                    Image(systemName: "book")
-                        .symbolRenderingMode(.monochrome)
+                    Image(systemName: selection == 3 ? "book" : "book.closed")                        .symbolRenderingMode(.monochrome)
                     Text("Readings")
                 }
                 .tag(3)

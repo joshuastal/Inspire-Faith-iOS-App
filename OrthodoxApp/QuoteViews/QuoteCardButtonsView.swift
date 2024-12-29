@@ -13,6 +13,18 @@ struct QuoteCardButtonsView: View {
     var body: some View {
         
         HStack {
+            
+            VStack {
+                ShareButton(
+                    sharedQuote: quote,
+                    iconSize: 20
+                )
+                //.padding(.bottom, 8)
+            }
+           
+            
+            Spacer()
+            
             VStack{ // Buttons
                 FavoriteButton(
                     quote: quote,
@@ -25,15 +37,6 @@ struct QuoteCardButtonsView: View {
                 //ClearFavorites(viewModel: viewModel)
             }
             
-            Spacer()
-            
-            VStack {
-                ShareButton(
-                    sharedQuote: quote,
-                    iconSize: 20
-                )
-                //.padding(.bottom, 8)
-            }
         }
     }
 }

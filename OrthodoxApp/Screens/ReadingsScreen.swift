@@ -16,6 +16,4 @@ struct ReadingsScreen: View {
     }
 }
 
-#Preview {
-    ReadingsScreen()
-}
+#Preview { ReadingsScreen() }

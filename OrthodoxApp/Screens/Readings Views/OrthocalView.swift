@@ -1,29 +1,51 @@
 import SwiftUI
 
+// OrthocalView.swift
 struct OrthocalView: View {
     @StateObject private var viewModel = OrthocalViewModel()
-
+    @State private var showingReadings = false
+    @State private var showingCommemorations = false
     var body: some View {
-        VStack {
+        
+        VStack(spacing: 20) {
+            VStack(spacing: 16) {
+                
+                // Daily Readings
+                DataButtonView(
+                    iconName: "book.fill",
+                    title: "Daily Readings"
+                ) {
+                    showingReadings = true
+                }
+                // Daily Readings
+                
+                DataButtonView(
+                    iconName: "person.fill",
+                    title: "Commemorations"
+                ) {
+                    showingCommemorations = true
+                }
+                
+            }
+            .padding(.horizontal)
+            
+            Spacer()
+        }
+        .sheet(isPresented: $showingReadings) {
             if let calendarDay = viewModel.calendarDay {
-                // Show calendar day details
-                Text("Day: \(calendarDay.day)")
-                Text("Month: \(calendarDay.month)")
-                Text("Year: \(calendarDay.year)")
-                Text("Summary Title: \(calendarDay.summaryTitle)")
-                // Add other properties as needed
-            } else if let error = viewModel.errorMessage {
-                // Show error message
-                Text(error)
-                    .foregroundColor(.red)
-            } else {
-                // Show loading spinner
-                ProgressView("Loading...")
+                ReadingsSheet(readings: calendarDay.readings)
+            }
+        }
+        .sheet(isPresented: $showingCommemorations) {
+            if let calendarDay = viewModel.calendarDay {
+                CommemorationSheet(stories: calendarDay.stories)
             }
         }
         .onAppear {
-            // Load calendar day data when the view appears
             viewModel.loadCalendarDay()
         }
     }
+    
 }
+
+#Preview { OrthocalView() }
