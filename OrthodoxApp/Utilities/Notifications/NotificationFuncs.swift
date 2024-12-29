@@ -97,4 +97,15 @@ func scheduleNotification(viewModel: QuotesViewModel) {
     
     // Schedule the new notification
     UNUserNotificationCenter.current().add(request)
+    print("Notification scheduled")
+}
+
+func rescheduleNotifications(viewModel: QuotesViewModel) {
+    UNUserNotificationCenter.current().getNotificationSettings { settings in
+        DispatchQueue.main.async {
+            if settings.authorizationStatus == .authorized {
+                scheduleNotification(viewModel: viewModel)
+            }
+        }
+    }
 }

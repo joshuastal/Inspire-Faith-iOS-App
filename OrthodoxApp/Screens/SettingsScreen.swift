@@ -23,6 +23,8 @@ struct SettingsScreen: View {
     
     @StateObject private var notificationSettings = NotificationSettings()
     
+    @ObservedObject var viewModel: QuotesViewModel
+    
     var body: some View {
         List {
             
@@ -55,13 +57,23 @@ struct SettingsScreen: View {
         .sheet(isPresented: $showingDatePicker) {
             NotificationTimePicker(
                 notificationSettings: notificationSettings,
+                viewModel: viewModel,
                 isPresented: $showingDatePicker
             )
         }
     }
 }
 
-#Preview { SettingsScreen() }
+#Preview { SettingsScreen(viewModel: {
+    let viewModel = QuotesViewModel()
+    // Add sample quotes
+    viewModel.allQuotes = viewModel.testQuotes
+    
+    // Add some favorite quotes
+    viewModel.favoriteQuotes = [viewModel.allQuotes[0]] // Make the first quote a favorite
+    
+    return viewModel
+}()) }
 
 
 

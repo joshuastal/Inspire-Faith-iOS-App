@@ -33,7 +33,7 @@ struct HomeScreen: View {
             }
             .navigationTitle("🏠 Home Screen")
             .toolbar {
-                NavigationLink(destination: SettingsScreen()) {
+                NavigationLink(destination: SettingsScreen(viewModel: viewModel)) {
                     Image(systemName: "gearshape")
                         .foregroundColor(.primary)
                 }
