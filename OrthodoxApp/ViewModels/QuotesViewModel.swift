@@ -5,27 +5,40 @@ import FirebaseFirestore
 class QuotesViewModel: ObservableObject {
     @Published var firestoreQuotes: [QuoteObject] = []
     @Published var localQuotes: [QuoteObject] = []
-    @Published var allQuotes: [QuoteObject] = []
+    
+    
+    @AppStorage("savedAllQuotes") private var savedAllQuotesData: Data = Data()
+    @Published var allQuotes: [QuoteObject] = [] {
+        didSet {
+            if let encoded = try? JSONEncoder().encode(allQuotes) {
+                savedAllQuotesData = encoded
+            }
+        }
+    }
     
     // Create AppStorage for favorites
-        @AppStorage("savedFavorites") private var savedFavoritesData: Data = Data()
-        
-        // Create published property that syncs with AppStorage
-        @Published var favoriteQuotes: [QuoteObject] = [] {
-            didSet {
-                // When favoriteQuotes changes, encode and save to AppStorage
-                if let encoded = try? JSONEncoder().encode(favoriteQuotes) {
-                    savedFavoritesData = encoded
-                }
+    @AppStorage("savedFavorites") private var savedFavoritesData: Data = Data()
+    
+    // Create published property that syncs with AppStorage
+    @Published var favoriteQuotes: [QuoteObject] = [] {
+        didSet {
+            // When favoriteQuotes changes, encode and save to AppStorage
+            if let encoded = try? JSONEncoder().encode(favoriteQuotes) {
+                savedFavoritesData = encoded
             }
         }
-        
-        init() {
-            // Load favorites from AppStorage when initializing
-            if let decoded = try? JSONDecoder().decode([QuoteObject].self, from: savedFavoritesData) {
-                favoriteQuotes = decoded
-            }
+    }
+    
+    init() {
+        // Load favorites from AppStorage when initializing
+        if let decoded = try? JSONDecoder().decode([QuoteObject].self, from: savedFavoritesData) {
+            favoriteQuotes = decoded
         }
+        
+        if let decoded = try? JSONDecoder().decode([QuoteObject].self, from: savedAllQuotesData) {
+            allQuotes = decoded
+        }
+    }
     
     
     func addToFavorites(quote: QuoteObject) {
@@ -62,13 +75,13 @@ class QuotesViewModel: ObservableObject {
                         author: data["Author"] as? String ?? ""
                     )
                 }
-
+                
                 self.allQuotes = (self.firestoreQuotes + self.localQuotes).shuffled()
                 // Omitted self.favoriteQuotes because they were being added twice
                 
                 print("\(counter) quotes fetched from Firestore")
                 print("\(self.allQuotes.count) quotes in total")
-
+                
             }
         }
     }

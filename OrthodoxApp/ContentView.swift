@@ -19,7 +19,7 @@ struct ContentView: View {
                 }
                 .tag(2)
             
-            HomeScreen()
+            HomeScreen(viewModel: viewModel)
                 .tabItem {
                     Image(systemName: "house")
                         .symbolRenderingMode(.monochrome)
