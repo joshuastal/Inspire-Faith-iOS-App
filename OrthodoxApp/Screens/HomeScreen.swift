@@ -27,7 +27,7 @@ struct HomeScreen: View {
         // Multiple conditions with a switch
         switch level {
         case "No Fast":
-            return "No Fast Today! 😄"
+            return "No Fast Today!"
         case "Fast — Wine and Oil are Allowed":
             return "Fast — Wine and Oil are Allowed 🥩 🧀 🐟"
         case "Fast — Fish, Wine and Oil are Allowed":
@@ -47,6 +47,15 @@ struct HomeScreen: View {
                         HomePill(
                             iconName: "fork.knife",
                             content: "Fast: \(fastTitle)"
+                        )
+                    }
+                    
+                    if let feasts = orthocalViewModel.calendarDay?.feasts, !feasts.isEmpty {
+                        HomePill(
+                            iconName: "party.popper",
+                            content: "Feasts: \(feasts.joined(separator: ", \n"))",
+                            iconOffset: CGPoint(x: -10, y: 0),
+                            textOffset: CGPoint(x: -11, y: 0)
                         )
                     }
                                     
@@ -69,7 +78,7 @@ struct HomeScreen: View {
                     viewModel: quotesViewModel
                 )
             }
-            .navigationTitle("🏠 Home Screen")
+            .navigationTitle("🏠 Home")
             .toolbar {
                 NavigationLink(destination: SettingsScreen(viewModel: quotesViewModel)) {
                     Image(systemName: "gearshape")

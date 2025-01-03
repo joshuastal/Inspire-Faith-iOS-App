@@ -14,6 +14,7 @@ struct SettingsScreen: View {
     @AppStorage("appTheme") private var selectedTheme: String = AppTheme.system.rawValue
     @AppStorage("quoteFontSize") private var quoteFontSize: Double = 18
     @AppStorage("readingFontSize") private var readingFontSize: Double = 19
+    @AppStorage("verseFontSize") private var verseFontSize: Double = 18
     @AppStorage("accentColor") private var accentColor: Color = .blue
     
     
@@ -32,6 +33,7 @@ struct SettingsScreen: View {
                 selectedTheme: $selectedTheme,
                 quoteFontSize: $quoteFontSize,
                 readingFontSize: $readingFontSize,
+                verseFontSize: $verseFontSize,
                 accentColor: $accentColor
             )
             

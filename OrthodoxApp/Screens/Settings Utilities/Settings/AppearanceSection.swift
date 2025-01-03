@@ -12,6 +12,7 @@ struct AppearanceSection: View {
     @Binding var selectedTheme: String
     @Binding var quoteFontSize: Double
     @Binding var readingFontSize: Double
+    @Binding var verseFontSize: Double
     @Binding var accentColor: Color
     
     var body: some View {
@@ -27,6 +28,8 @@ struct AppearanceSection: View {
             
             
             ReadingsFontSize(readingFontSize: $readingFontSize)
+            
+            VerseFontSize(verseFontSize: $verseFontSize)
         }
     }
 }

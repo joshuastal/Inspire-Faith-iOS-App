@@ -26,8 +26,11 @@ struct DataButtonView: View {
                     .foregroundColor(.secondary)
             }
             .padding()
-            .background(Color(.systemGray6))
-            .cornerRadius(12)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(Color(.systemGray6))
+                    .strokeBorder(Color(.label).opacity(0.075), lineWidth: 2)
+            )            .cornerRadius(12)
             .shadow(radius: 2)
         }
     }

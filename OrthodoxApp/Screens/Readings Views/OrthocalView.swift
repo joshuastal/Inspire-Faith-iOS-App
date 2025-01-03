@@ -1,11 +1,21 @@
 import SwiftUI
 
-// OrthocalView.swift
+
+extension OrthocalViewModel {
+    var hasProphecyReadings: Bool {
+        guard let calendarDay = calendarDay else { return false }
+        return calendarDay.readings.contains { reading in
+            reading.source.contains("Prophecy")
+        }
+    }
+}
+
 struct OrthocalView: View {
     @StateObject private var viewModel = OrthocalViewModel()
     @State private var showingEpistleReadings = false
     @State private var showingGospelReadings = false
     @State private var showingCommemorations = false
+    @State private var showingProphecyReadings = false
     
     var body: some View {
         VStack(spacing: 20) {
@@ -27,6 +37,15 @@ struct OrthocalView: View {
                     showingGospelReadings = true
                 }
                 
+                if viewModel.hasProphecyReadings {
+                    DataButtonView(
+                        iconName: "book.fill",
+                        title: "Daily Prophecy Readings"
+                    ) {
+                        showingProphecyReadings = true
+                    }
+                }
+                
                 DataButtonView(
                     iconName: "person.fill",
                     title: "Commemorations"
@@ -34,6 +53,8 @@ struct OrthocalView: View {
                     // First show the sheet with existing data
                     showingCommemorations = true
                 }
+                
+                
             }
             .padding(.horizontal)
             
@@ -52,6 +73,16 @@ struct OrthocalView: View {
         .sheet(isPresented: $showingGospelReadings) {
             if let calendarDay = viewModel.calendarDay {
                 DailyGospelSheet(readings: calendarDay.readings)
+            } else {
+                ProgressView("Loading readings...")
+                    .onAppear {
+                        viewModel.loadCalendarDay()
+                    }
+            }
+        }
+        .sheet(isPresented: $showingProphecyReadings) {
+            if let calendarDay = viewModel.calendarDay {
+                DailyProphecySheet(readings: calendarDay.readings)
             } else {
                 ProgressView("Loading readings...")
                     .onAppear {
