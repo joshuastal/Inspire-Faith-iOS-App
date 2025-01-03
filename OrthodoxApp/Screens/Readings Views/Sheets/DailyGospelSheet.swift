@@ -16,23 +16,23 @@ struct DailyGospelSheet: View {
             ScrollView {
                 VStack(spacing: 20) {
                     ForEach(readings.indices, id: \.self) { index in
-                            let reading = readings[index]
-                            let reference = reading.display
-                                .replacingOccurrences(of: ".", with: ":")
+                        let reading = readings[index]
+                        let reference = reading.display
+                            .replacingOccurrences(of: ".", with: ":")
                         
-                            if(reading.source.contains("Gospel")) {
-                                ReadingCardView(reading: reading, reference: reference)
-                            }
-
+                        if(reading.source.contains("Gospel")) {
+                            ReadingCardView(reading: reading, reference: reference)
+                        }
+                        
                     }
                 }
                 .padding()
             }
             .toolbar {
-                ToolbarItem {
+                ToolbarItem (placement: .topBarLeading) {
                     Text("Daily Gospel Readings")
                         .font(.system(size: 24, weight: .bold))
-                        .padding(.trailing, 45)
+                        .padding(.trailing, 15)
                 }
                 
                 ToolbarItem(placement: .topBarTrailing) {

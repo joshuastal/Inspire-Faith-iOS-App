@@ -39,7 +39,7 @@ struct FavoriteButton: View {
                     height: height
                 )
                 .foregroundColor(accentColor)
-                .scaleEffect(viewModel.favoriteQuotes.contains(where: { $0.quote == quote.quote && $0.author == quote.author }) ? 1.1 : 1.0)
+                .scaleEffect(viewModel.favoriteQuotes.contains(where: { $0.quote == quote.quote && $0.author == quote.author }) ? 1.0 : 1.0) // Adjust the 0.95 value as needed
             }
             .frame(
                 minWidth: 44,
