@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+struct BibleVerse: Identifiable, Codable {
+    var id = UUID()
+    let text: String
+    let reference: String
+}
+
+

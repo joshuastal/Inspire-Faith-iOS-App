@@ -53,18 +53,7 @@ func checkNotificationStatusAndSchedule(isNotificationsDenied: Binding<Bool>, vi
 func scheduleNotification(viewModel: QuotesViewModel) {
     let content = UNMutableNotificationContent()
     
-    let dailyQuote: QuoteObject
-    
-    if !viewModel.allQuotes.isEmpty {
-        print("All quotes size: \(viewModel.allQuotes.count)")
-        dailyQuote = viewModel.allQuotes.randomElement()!
-    } else if !viewModel.favoriteQuotes.isEmpty {
-        print("Favorite quotes size: \(viewModel.favoriteQuotes.count)")
-        dailyQuote = viewModel.favoriteQuotes.randomElement()!
-    } else {
-        print("Lists are empty - All quotes size: \(viewModel.allQuotes.count), Favorite quotes size: \(viewModel.favoriteQuotes.count)")
-        dailyQuote = QuoteObject(quote: "No quote", author: "Error")
-    }
+    let dailyQuote = viewModel.getDailyQuote()
     
     content.title = "Daily Quote"
     content.body = "\"\(dailyQuote.quote)\""

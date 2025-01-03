@@ -1,10 +1,3 @@
-//
-//  QuotesScreen.swift
-//  OrthodoxApp
-//
-//  Created by Joshua Stalinger on 12/25/24.
-//
-
 import SwiftUI
 
 struct QuotesScreen: View {
@@ -19,12 +12,11 @@ struct QuotesScreen: View {
                 tab1: "All",
                 tab2: "Favorites"
             )
-            
+            .animation(.spring(response: 0.3, dampingFraction: 0.7), value: currentTab)
             
             TabView(selection: $currentTab) {
                 AllQuotesView(allQuotes: viewModel.allQuotes, viewModel: viewModel)
                     .tag(0)
-                
                 
                 Group {
                     if viewModel.favoriteQuotes.isEmpty {
@@ -49,6 +41,8 @@ struct QuotesScreen: View {
                 .tag(1)
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
+            // Match animation timing with CustomTabView
+            .animation(.spring(response: 0.3, dampingFraction: 0.7), value: currentTab)
         }
     }
 }

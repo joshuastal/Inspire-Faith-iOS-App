@@ -43,7 +43,7 @@ class NotificationSettings: ObservableObject {
     func updateNotificationTime(_ newTime: Date) {
             notificationTime = newTime
             print("Time updated to: \(formattedTime)")  // Add this debug print
-    }
+        }
     
     var formattedTime: String {
             let formatter = DateFormatter()

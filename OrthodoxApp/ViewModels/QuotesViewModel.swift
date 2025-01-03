@@ -7,6 +7,15 @@ class QuotesViewModel: ObservableObject {
     @Published var localQuotes: [QuoteObject] = []
     
     
+    
+    private var lastQuoteDate: Date?
+    @Published private(set) var dailyQuote: QuoteObject?
+    
+    // Use UserDefaults to persist the data
+    private let defaults = UserDefaults.standard
+    
+    
+    
     @AppStorage("savedAllQuotes") private var savedAllQuotesData: Data = Data()
     @Published var allQuotes: [QuoteObject] = [] {
         didSet {
@@ -40,6 +49,61 @@ class QuotesViewModel: ObservableObject {
         }
     }
     
+    func getDailyQuote() -> QuoteObject {
+            // First check if we already have a quote for today
+            if let currentQuote = dailyQuote,
+               let savedDate = defaults.object(forKey: "lastQuoteDate") as? Date,
+               Calendar.current.isDateInToday(savedDate) {
+                return currentQuote
+            }
+            
+            // Get quote from storage or generate new one
+            let quote = getOrGenerateQuote()
+            
+            // Update the published property on the main thread
+            DispatchQueue.main.async {
+                self.dailyQuote = quote
+            }
+            
+            return quote
+        }
+        
+        private func getOrGenerateQuote() -> QuoteObject {
+            // Try to get saved quote first
+            if let savedQuoteData = defaults.data(forKey: "dailyQuote"),
+               let savedDate = defaults.object(forKey: "lastQuoteDate") as? Date,
+               Calendar.current.isDateInToday(savedDate),
+               let savedQuote = try? JSONDecoder().decode(QuoteObject.self, from: savedQuoteData) {
+                return savedQuote
+            }
+            
+            // Generate new quote if needed
+            let newQuote: QuoteObject
+            if !allQuotes.isEmpty {
+                newQuote = allQuotes.randomElement()!
+            } else if !favoriteQuotes.isEmpty {
+                newQuote = favoriteQuotes.randomElement()!
+            } else {
+                newQuote = QuoteObject(quote: "No quote", author: "Error")
+            }
+            
+            // Save to UserDefaults
+            if let encoded = try? JSONEncoder().encode(newQuote) {
+                defaults.set(encoded, forKey: "dailyQuote")
+                defaults.set(Date(), forKey: "lastQuoteDate")
+            }
+            
+            return newQuote
+        }
+    
+    private func shouldUpdateDailyQuote() -> Bool {
+        guard let lastDate = lastQuoteDate,
+              let dailyQuote = dailyQuote else {
+            return true
+        }
+        
+        return !Calendar.current.isDateInToday(lastDate)
+    }
     
     func addToFavorites(quote: QuoteObject) {
         if !favoriteQuotes.contains(where: { $0.id == quote.id }) {

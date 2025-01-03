@@ -5,10 +5,7 @@ struct QuoteCardView: View {
     let quote: QuoteObject
     let viewModel: QuotesViewModel
     @AppStorage("quoteFontSize") private var quoteFontSize: Double = 18  // Add this line
-    
-    @State private var tapCount = 0
-    @State private var lastTapTime: Date = Date()
-    
+        
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             // Quote text
@@ -20,10 +17,9 @@ struct QuoteCardView: View {
             
             // Author with divider
             HStack {
-                Divider()
-                    .frame(width: 30, height: 1)
+                Spacer()
                 
-                Text("- \(quote.author)")
+                Text("— \(quote.author)")
                     .font(.custom("AvenirLTStd-Heavy", size: quoteFontSize))
                     .foregroundColor(.secondary)
             }

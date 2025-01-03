@@ -6,12 +6,12 @@ import FirebaseFirestore
 
 struct ContentView: View {
     let db = Firestore.firestore()
-    @StateObject var viewModel = QuotesViewModel()
+    @StateObject var quotesViewModel = QuotesViewModel()
     @State private var selection = 1
     
     var body: some View {
         TabView(selection: $selection) {
-            QuotesScreen(viewModel: viewModel)
+            QuotesScreen(viewModel: quotesViewModel)
                 .tabItem {
                     Image(systemName: "quote.bubble")
                         .symbolRenderingMode(.monochrome)
@@ -19,7 +19,8 @@ struct ContentView: View {
                 }
                 .tag(2)
             
-            HomeScreen(viewModel: viewModel)
+            HomeScreen(
+                quotesViewModel: quotesViewModel)
                 .tabItem {
                     Image(systemName: "house")
                         .symbolRenderingMode(.monochrome)
@@ -35,8 +36,8 @@ struct ContentView: View {
                 .tag(3)
         }
         .task {
-            viewModel.fetchQuotes(db: db)
-            print(viewModel.allQuotes)
+            quotesViewModel.fetchQuotes(db: db)
+            print(quotesViewModel.allQuotes)
         }
     }
 }

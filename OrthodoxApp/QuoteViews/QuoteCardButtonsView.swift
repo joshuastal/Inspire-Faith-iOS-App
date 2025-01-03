@@ -19,7 +19,6 @@ struct QuoteCardButtonsView: View {
                     sharedQuote: quote,
                     iconSize: 20
                 )
-                //.padding(.bottom, 8)
             }
            
             
@@ -32,9 +31,6 @@ struct QuoteCardButtonsView: View {
                     width: 22,
                     height: 20
                 )
-                //.padding(10)
-                //PrintFavorites(viewModel: viewModel)
-                //ClearFavorites(viewModel: viewModel)
             }
             
         }
