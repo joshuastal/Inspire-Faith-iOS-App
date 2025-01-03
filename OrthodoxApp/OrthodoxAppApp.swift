@@ -12,6 +12,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct OrthodoxAppApp: App {
+    init() {
+        // Set up notification delegate when app launches
+        UNUserNotificationCenter.current().delegate = notificationDelegate
+    }
     // Register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     

@@ -1,7 +1,13 @@
+//
+//  DailyGospelSheet.swift
+//  OrthodoxApp
+//
+//  Created by Joshua Stalinger on 1/2/25.
+//
+
 import SwiftUI
 
-
-struct ReadingsSheet: View {
+struct DailyEpistleSheet: View {
     let readings: [Reading]
     @Environment(\.dismiss) var dismiss
     
@@ -14,7 +20,7 @@ struct ReadingsSheet: View {
                             let reference = reading.display
                                 .replacingOccurrences(of: ".", with: ":")
                         
-                            if(reading.source.contains("Gospel")) {
+                            if(reading.source.contains("Epistle")) {
                                 ReadingCardView(reading: reading, reference: reference)
                             }
 
@@ -24,7 +30,7 @@ struct ReadingsSheet: View {
             }
             .toolbar {
                 ToolbarItem {
-                    Text("Daily Readings")
+                    Text("Daily Epistle Readings")
                         .font(.system(size: 24, weight: .bold))
                         .padding(.trailing, 45)
                 }
@@ -45,10 +51,9 @@ struct ReadingsSheet: View {
     }
 }
 
-// Preview provider to help debug
-struct ReadingsSheet_Previews: PreviewProvider {
+struct DailyEpistleSheet_Previews: PreviewProvider {
     static var previews: some View {
-        ReadingsSheet(readings: [
+        DailyEpistleSheet(readings: [
             Reading(
                 source: "Epistle",
                 book: "Romans",
@@ -98,3 +103,4 @@ struct ReadingsSheet_Previews: PreviewProvider {
         ])
     }
 }
+

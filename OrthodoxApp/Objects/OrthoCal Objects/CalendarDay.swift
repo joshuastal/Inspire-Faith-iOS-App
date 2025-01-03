@@ -13,7 +13,7 @@ struct CalendarDay: Codable {
     let summaryTitle: String
     let feastLevel: Int
     let feastLevelDescription: String
-    let feasts: [String]
+    let feasts: [String]?
     let fastLevel: Int
     let fastLevelDesc: String
     let fastException: Int

@@ -18,13 +18,13 @@ struct AboutSection: View {
             Button("About") {
                 showingAbout.toggle()
             }
-            .foregroundStyle(.white)
+            .foregroundStyle(Color(.label))
             
             
             Button("Privacy Policy") {
                 showingPrivacyPolicy.toggle()
             }
-            .foregroundStyle(.white)
+            .foregroundStyle(Color(.label))
         }
     }
 }
