@@ -259,7 +259,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 423A187A2D14DE5600DF3A95 /* Build configuration list for PBXProject "Inspire Faith" */;
+			buildConfigurationList = 423A187A2D14DE5600DF3A95 /* Build configuration list for PBXProject "InspireFaith" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -601,7 +601,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		423A187A2D14DE5600DF3A95 /* Build configuration list for PBXProject "Inspire Faith" */ = {
+		423A187A2D14DE5600DF3A95 /* Build configuration list for PBXProject "InspireFaith" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				423A18A12D14DE5800DF3A95 /* Debug */,
