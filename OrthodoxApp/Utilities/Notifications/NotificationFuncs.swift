@@ -50,6 +50,7 @@ func checkNotificationStatusAndSchedule(isNotificationsDenied: Binding<Bool>, vi
     }
 }
 
+@MainActor
 func scheduleNotification(viewModel: QuotesViewModel) {
     let content = UNMutableNotificationContent()
     

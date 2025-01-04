@@ -65,8 +65,8 @@ struct OrthocalView: View {
                 DailyEpistleSheet(readings: calendarDay.readings)
             } else {
                 ProgressView("Loading readings...")
-                    .onAppear {
-                        viewModel.loadCalendarDay()
+                    .task {  // Changed from onAppear
+                        await viewModel.loadCalendarDay()
                     }
             }
         }
@@ -75,8 +75,8 @@ struct OrthocalView: View {
                 DailyGospelSheet(readings: calendarDay.readings)
             } else {
                 ProgressView("Loading readings...")
-                    .onAppear {
-                        viewModel.loadCalendarDay()
+                    .task {  // Changed from onAppear
+                        await viewModel.loadCalendarDay()
                     }
             }
         }
@@ -85,8 +85,8 @@ struct OrthocalView: View {
                 DailyProphecySheet(readings: calendarDay.readings)
             } else {
                 ProgressView("Loading readings...")
-                    .onAppear {
-                        viewModel.loadCalendarDay()
+                    .task {  // Changed from onAppear
+                        await viewModel.loadCalendarDay()
                     }
             }
         }
@@ -95,14 +95,13 @@ struct OrthocalView: View {
                 CommemorationSheet(stories: calendarDay.stories)
             } else {
                 ProgressView("Loading commemorations...")
-                    .onAppear {
-                        viewModel.loadCalendarDay()
+                    .task {  // Changed from onAppear
+                        await viewModel.loadCalendarDay()
                     }
             }
         }
-        .onAppear {
-            // Initial load when view appears
-            viewModel.loadCalendarDay()
+        .task {  // Changed from onAppear
+            await viewModel.loadCalendarDay()
         }
     }
 }

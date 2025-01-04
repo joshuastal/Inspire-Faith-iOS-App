@@ -2,16 +2,14 @@ import Foundation
 import SwiftUI
 import FirebaseFirestore
 
+@MainActor
 class QuotesViewModel: ObservableObject {
     @Published var firestoreQuotes: [QuoteObject] = []
     @Published var localQuotes: [QuoteObject] = []
     
     
     
-    private var lastQuoteDate: Date?
     @Published private(set) var dailyQuote: QuoteObject?
-    
-    // Use UserDefaults to persist the data
     private let defaults = UserDefaults.standard
     
     
@@ -50,60 +48,50 @@ class QuotesViewModel: ObservableObject {
     }
     
     func getDailyQuote() -> QuoteObject {
-            // First check if we already have a quote for today
-            if let currentQuote = dailyQuote,
-               let savedDate = defaults.object(forKey: "lastQuoteDate") as? Date,
-               Calendar.current.isDateInToday(savedDate) {
-                return currentQuote
-            }
-            
-            // Get quote from storage or generate new one
-            let quote = getOrGenerateQuote()
-            
-            // Update the published property on the main thread
-            DispatchQueue.main.async {
-                self.dailyQuote = quote
-            }
-            
-            return quote
+        print("Starting getDailyQuote")
+        
+        // Try to get existing quote and date from UserDefaults
+        if let savedQuoteData = defaults.data(forKey: "dailyQuote"),
+           let savedDate = defaults.object(forKey: "lastQuoteDate") as? Date,
+           let savedQuote = try? JSONDecoder().decode(QuoteObject.self, from: savedQuoteData),
+           Calendar.current.isDateInToday(savedDate) {
+            print("Using existing quote from today")
+            // Return the saved quote without updating state
+            return savedQuote
         }
         
-        private func getOrGenerateQuote() -> QuoteObject {
-            // Try to get saved quote first
-            if let savedQuoteData = defaults.data(forKey: "dailyQuote"),
-               let savedDate = defaults.object(forKey: "lastQuoteDate") as? Date,
-               Calendar.current.isDateInToday(savedDate),
-               let savedQuote = try? JSONDecoder().decode(QuoteObject.self, from: savedQuoteData) {
-                return savedQuote
-            }
-            
-            // Generate new quote if needed
-            let newQuote: QuoteObject
-            if !allQuotes.isEmpty {
-                newQuote = allQuotes.randomElement()!
-            } else if !favoriteQuotes.isEmpty {
-                newQuote = favoriteQuotes.randomElement()!
-            } else {
-                newQuote = QuoteObject(quote: "No quote", author: "Error")
-            }
-            
-            // Save to UserDefaults
-            if let encoded = try? JSONEncoder().encode(newQuote) {
-                defaults.set(encoded, forKey: "dailyQuote")
-                defaults.set(Date(), forKey: "lastQuoteDate")
-            }
-            
-            return newQuote
-        }
-    
-    private func shouldUpdateDailyQuote() -> Bool {
-        guard let lastDate = lastQuoteDate,
-              let dailyQuote = dailyQuote else {
-            return true
+        // Get quote from storage or generate new one
+        let quote = getOrGenerateQuote()
+        
+        // Save everything to UserDefaults
+        if let encoded = try? JSONEncoder().encode(quote) {
+            defaults.set(encoded, forKey: "dailyQuote")
+            defaults.set(Date(), forKey: "lastQuoteDate")
         }
         
-        return !Calendar.current.isDateInToday(lastDate)
+        return quote
     }
+
+    // Add a separate function to update the published state
+    func updateDailyQuote() {
+        Task { @MainActor in
+            dailyQuote = getDailyQuote()
+        }
+    }
+
+    private func getOrGenerateQuote() -> QuoteObject {
+        print("Starting getOrGenerateQuote")
+        print("allQuotes count: \(allQuotes.count)")
+        
+        guard !allQuotes.isEmpty else {
+            return QuoteObject(quote: "No quote", author: "Error")
+        }
+        
+        let newQuote = allQuotes.randomElement()!
+        print("Selected new quote: \(newQuote.quote)")
+        return newQuote
+    }
+
     
     func addToFavorites(quote: QuoteObject) {
         if !favoriteQuotes.contains(where: { $0.id == quote.id }) {
@@ -115,40 +103,24 @@ class QuotesViewModel: ObservableObject {
         }
     }
     
-    func fetchQuotes(db: Firestore) {
-        
-        var counter = 0
-        
-        db.collection("Quotes").getDocuments { snapshot, error in
-            if let error = error {
-                print("Error fetching quotes: \(error)")
-                return
+    func fetchQuotes(db: Firestore) async throws {
+            let snapshot = try await db.collection("Quotes").getDocuments()
+            
+            var counter = 0
+            
+            self.firestoreQuotes = snapshot.documents.map { doc in
+                counter += 1
+                let data = doc.data()
+                return QuoteObject(
+                    quote: data["Quote"] as? String ?? "",
+                    author: data["Author"] as? String ?? ""
+                )
             }
             
-            guard let documents = snapshot?.documents else {
-                print("No documents found")
-                return
-            }
-            
-            DispatchQueue.main.async {
-                self.firestoreQuotes = documents.map { doc in
-                    counter += 1
-                    let data = doc.data()
-                    return QuoteObject(
-                        quote: data["Quote"] as? String ?? "",
-                        author: data["Author"] as? String ?? ""
-                    )
-                }
-                
-                self.allQuotes = (self.firestoreQuotes + self.localQuotes).shuffled()
-                // Omitted self.favoriteQuotes because they were being added twice
-                
-                print("\(counter) quotes fetched from Firestore")
-                print("\(self.allQuotes.count) quotes in total")
-                
-            }
+            self.allQuotes = (self.firestoreQuotes + self.localQuotes).shuffled()
+            print("\(counter) quotes fetched from Firestore")
+            print("\(self.allQuotes.count) quotes in total")
         }
-    }
     
     let testQuote = QuoteObject(
         quote: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",

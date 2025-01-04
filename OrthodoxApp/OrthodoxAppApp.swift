@@ -1,50 +1,91 @@
 import SwiftUI
 import FirebaseCore
+import FirebaseFirestore
+
+enum AppState {
+    case loading    // Show Launch Screen or Placeholder
+    case ready      // Main Content Ready
+}
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
-                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         FirebaseApp.configure()
         return true
     }
 }
 
-
 @main
 struct OrthodoxAppApp: App {
-    init() {
-        // Set up notification delegate when app launches
-        UNUserNotificationCenter.current().delegate = notificationDelegate
-    }
-    // Register app delegate for Firebase setup
+    @StateObject private var quotesViewModel = QuotesViewModel()
+    @StateObject private var orthocalViewModel = OrthocalViewModel()
+    @State private var appState: AppState = .loading
+
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    
-    // Add theme support
+
     @AppStorage("appTheme") private var selectedTheme: String = AppTheme.system.rawValue
     @AppStorage("accentColor") private var accentColor: Color = .blue
-    
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .preferredColorScheme(getColorScheme())
-                .tint(accentColor)
+            ZStack {
+                if appState == .loading {
+                    LaunchScreen()
+                        .transition(.opacity) // Smooth fade-out
+                } else {
+                    ContentView(
+                        quotesViewModel: quotesViewModel,
+                        orthocalViewModel: orthocalViewModel
+                    )
+                    .preferredColorScheme(getColorScheme())
+                    .tint(accentColor)
+                    .transition(.opacity) // Smooth fade-in
+                }
+            }
+            .animation(.easeInOut(duration: 0.5), value: appState) // Crossfade effect
+            .task {
+                await loadApp()
+            }
         }
     }
-    
-    // Add the theme helper function
-    func getColorScheme() -> ColorScheme? {
+
+
+
+
+    private func loadApp() async {
+        do {
+            // Fetch and prepare data
+            try await quotesViewModel.fetchQuotes(db: Firestore.firestore())
+            await orthocalViewModel.loadCalendarDay()
+
+            // Allow UI to initialize
+            //try await Task.sleep(nanoseconds: 10_000_000_000) // 1 second (optional for smoother transition)
+
+            // Set state to ready
+            await MainActor.run {
+                withAnimation(.easeInOut) {
+                    appState = .ready
+                }
+            }
+        } catch {
+            print("Error loading app: \(error)")
+            await MainActor.run {
+                appState = .ready // Fallback to main content
+            }
+        }
+    }
+
+    private func getColorScheme() -> ColorScheme? {
         switch selectedTheme {
-        case AppTheme.light.rawValue:
-            return .light
-        case AppTheme.dark.rawValue:
-            return .dark
-        default:
-            return nil  // This will follow the system setting
+        case AppTheme.light.rawValue: return .light
+        case AppTheme.dark.rawValue: return .dark
+        default: return nil
         }
     }
 }
 
-// Add the theme enum
+
+
 enum AppTheme: String, CaseIterable {
     case system = "System"
     case light = "Light"

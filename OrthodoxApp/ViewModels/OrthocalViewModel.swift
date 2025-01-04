@@ -1,12 +1,13 @@
 import Foundation
 
+@MainActor
 class OrthocalViewModel: ObservableObject {
     @Published var calendarDay: CalendarDay?
     @Published var errorMessage: String?
 
     
     // Load calendar day data from the API
-    func loadCalendarDay() {
+    func loadCalendarDay() async {
         print("\n🔄 Starting new data load at: \(Date())")
         
         APIClient.shared.fetchCalendarDay { result in

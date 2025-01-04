@@ -13,7 +13,7 @@ import FirebaseFirestore
 struct HomeScreen: View {
     let db = Firestore.firestore()
     @ObservedObject var quotesViewModel: QuotesViewModel
-    @StateObject var orthocalViewModel = OrthocalViewModel()  // Add this for calendar data
+    @ObservedObject var orthocalViewModel: OrthocalViewModel  // Add this for calendar data
     @State private var isNotificationsDenied = false
     
     var fastLevel: String? {
@@ -67,11 +67,8 @@ struct HomeScreen: View {
                 }
             }
             .onAppear {
-                if quotesViewModel.allQuotes.isEmpty {
-                    quotesViewModel.fetchQuotes(db: Firestore.firestore())
-                }
                 
-                orthocalViewModel.loadCalendarDay()  // Add this line to load calendar data
+                quotesViewModel.updateDailyQuote()
                 
                 checkNotificationStatusAndSchedule(
                     isNotificationsDenied: $isNotificationsDenied,
@@ -101,16 +98,16 @@ struct HomeScreen: View {
     
 }
 
-#Preview {
-    HomeScreen(
-        quotesViewModel: {
-            let viewModel = QuotesViewModel()
-            // Add sample quotes
-            viewModel.allQuotes = viewModel.testQuotes
-            
-            // Add some favorite quotes
-            viewModel.favoriteQuotes = [viewModel.allQuotes[0]] // Make the first quote a favorite
-            
-            return viewModel
-        }())
-}
+//#Preview {
+//    HomeScreen(
+//        quotesViewModel: {
+//            let viewModel = QuotesViewModel()
+//            // Add sample quotes
+//            viewModel.allQuotes = viewModel.testQuotes
+//
+//            // Add some favorite quotes
+//            viewModel.favoriteQuotes = [viewModel.allQuotes[0]] // Make the first quote a favorite
+//
+//            return viewModel
+//        }())
+//}

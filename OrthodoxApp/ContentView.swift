@@ -6,7 +6,8 @@ import FirebaseFirestore
 
 struct ContentView: View {
     let db = Firestore.firestore()
-    @StateObject var quotesViewModel = QuotesViewModel()
+    @ObservedObject var quotesViewModel: QuotesViewModel
+    @ObservedObject var orthocalViewModel: OrthocalViewModel  // Changed from @StateObject
     @State private var selection = 1
     
     var body: some View {
@@ -20,27 +21,27 @@ struct ContentView: View {
                 .tag(2)
             
             HomeScreen(
-                quotesViewModel: quotesViewModel)
-                .tabItem {
-                    Image(systemName: "house")
-                        .symbolRenderingMode(.monochrome)
-                    Text("Home")
-                }
-                .tag(1)
+                quotesViewModel: quotesViewModel,
+                orthocalViewModel: orthocalViewModel
+            )
+            .tabItem {
+                Image(systemName: "house")
+                    .symbolRenderingMode(.monochrome)
+                Text("Home")
+            }
+            .tag(1)
             
             ReadingsScreen()
                 .tabItem {
-                    Image(systemName: selection == 3 ? "book" : "book.closed")                        .symbolRenderingMode(.monochrome)
+                    Image(systemName: selection == 3 ? "book" : "book.closed")
+                        .symbolRenderingMode(.monochrome)
                     Text("Readings")
                 }
                 .tag(3)
         }
-        .task {
-            quotesViewModel.fetchQuotes(db: db)
-            print(quotesViewModel.allQuotes)
-        }
     }
 }
-#Preview { ContentView() }
+
+//#Preview { ContentView() }
 
 
