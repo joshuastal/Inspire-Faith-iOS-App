@@ -46,7 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		423A187F2D14DE5600DF3A95 /* OrthodoxApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OrthodoxApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		423A187F2D14DE5600DF3A95 /* Inspire Faith.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Inspire Faith.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		423A188F2D14DE5800DF3A95 /* OrthodoxAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OrthodoxAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		423A18992D14DE5800DF3A95 /* OrthodoxAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OrthodoxAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -139,7 +139,7 @@
 		423A18802D14DE5600DF3A95 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				423A187F2D14DE5600DF3A95 /* OrthodoxApp.app */,
+				423A187F2D14DE5600DF3A95 /* Inspire Faith.app */,
 				423A188F2D14DE5800DF3A95 /* OrthodoxAppTests.xctest */,
 				423A18992D14DE5800DF3A95 /* OrthodoxAppUITests.xctest */,
 			);
@@ -187,7 +187,7 @@
 				42878A252D1618A600F0F5C8 /* FirebaseVertexAI */,
 			);
 			productName = OrthodoxApp;
-			productReference = 423A187F2D14DE5600DF3A95 /* OrthodoxApp.app */;
+			productReference = 423A187F2D14DE5600DF3A95 /* Inspire Faith.app */;
 			productType = "com.apple.product-type.application";
 		};
 		423A188E2D14DE5800DF3A95 /* OrthodoxAppTests */ = {
@@ -259,7 +259,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 423A187A2D14DE5600DF3A95 /* Build configuration list for PBXProject "InspireFaith" */;
+			buildConfigurationList = 423A187A2D14DE5600DF3A95 /* Build configuration list for PBXProject "Inspire Faith" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -469,6 +469,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = OrthodoxApp/OrthodoxApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OrthodoxApp/Preview Content\"";
@@ -488,10 +489,12 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = joshuastal.OrthodoxApp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Inspire Faith";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -500,6 +503,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = OrthodoxApp/OrthodoxApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OrthodoxApp/Preview Content\"";
@@ -519,10 +523,12 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = joshuastal.OrthodoxApp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Inspire Faith";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -601,7 +607,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		423A187A2D14DE5600DF3A95 /* Build configuration list for PBXProject "InspireFaith" */ = {
+		423A187A2D14DE5600DF3A95 /* Build configuration list for PBXProject "Inspire Faith" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				423A18A12D14DE5800DF3A95 /* Debug */,
