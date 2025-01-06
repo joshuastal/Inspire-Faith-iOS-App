@@ -37,10 +37,10 @@ struct SettingsScreen: View {
                 accentColor: $accentColor
             )
             
-            NotificationSection (
-                notificationSettings: notificationSettings,
-                showingDatePicker: $showingDatePicker
-            )
+            //NotificationSection (
+            //    notificationSettings: notificationSettings,
+            //    showingDatePicker: $showingDatePicker
+            //)
             
             AboutSection (
                 showingAbout: $showingAbout,

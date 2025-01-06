@@ -78,7 +78,10 @@ struct HomeScreen: View {
                     
                     
                                     
-                    DailyQuoteCardView(quote: quotesViewModel.getDailyQuote(), viewModel: quotesViewModel)
+                    DailyQuoteCardView(
+                        quote: quotesViewModel.dailyQuote ?? quotesViewModel.testQuote,
+                        viewModel: quotesViewModel
+                    )
                     
                     DailyVerseView()
                     
@@ -89,10 +92,10 @@ struct HomeScreen: View {
                 
                 quotesViewModel.updateDailyQuote()
                 
-                checkNotificationStatusAndSchedule(
-                    isNotificationsDenied: $isNotificationsDenied,
-                    viewModel: quotesViewModel
-                )
+                //checkNotificationStatusAndSchedule(
+                //    isNotificationsDenied: $isNotificationsDenied,
+                //    viewModel: quotesViewModel
+                //)
             }
             .scrollIndicators(.hidden)
             .navigationTitle("🏠 Home")
