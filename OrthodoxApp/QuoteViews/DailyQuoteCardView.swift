@@ -60,6 +60,7 @@ struct DailyQuoteCardView: View {
                 quote: quote
             )
         }
+
         // Padding for card content with relation to the outline
         .padding(EdgeInsets(top: 5, leading: 20, bottom: 5, trailing: 20))
         .frame(maxWidth: .infinity)
@@ -68,9 +69,10 @@ struct DailyQuoteCardView: View {
             RoundedRectangle(cornerRadius: 12)
                 .fill(Color(.systemGray6))  // or any color you want
                 .strokeBorder(Color(.label).opacity(0.075), lineWidth: 2)
+                .shadow(radius: 2)
         )
         // End Card Outline
-        .padding(.horizontal)
+        .padding(.horizontal, 8)
     }
 }
 

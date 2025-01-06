@@ -27,13 +27,13 @@ struct HomeScreen: View {
         // Multiple conditions with a switch
         switch level {
         case "No Fast":
-            return "No Fast Today!"
+            return "🚫"
         case "Fast — Wine and Oil are Allowed":
-            return "Fast — Wine and Oil are Allowed 🥩 🧀 🐟"
+            return "🥩 🧀 🐟"
         case "Fast — Fish, Wine and Oil are Allowed":
-            return "Fast — Fish, Wine and Oil are Allowed 🥩 🧀"
+            return "🥩 🧀"
         case "Fast":
-            return "Strict Fast 🥩 🧀 🐟 🍷"
+            return "💀"
         default:
             return "Fast \(level)"
         }
@@ -42,22 +42,41 @@ struct HomeScreen: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                VStack(spacing: 16) {
-                    if orthocalViewModel.calendarDay != nil {
-                        HomePill(
-                            iconName: "fork.knife",
-                            content: "Fast: \(fastTitle)"
-                        )
+                VStack (spacing: 16) {
+                    
+                    HStack (spacing: 8) {
+                        if orthocalViewModel.calendarDay != nil {
+                            HomePill(
+                                iconName: "fork.knife",
+                                content: "Fast: \(fastTitle)",
+                                iconOffset: CGPoint(x: -15, y: 0),
+                                textOffset: CGPoint(x: -15, y: 0),
+                                scalesText: true
+                            )
+                            .padding(.leading, 8)
+                        }
+                        
+                        if let tone = orthocalViewModel.calendarDay?.tone {
+                            HomePill (
+                                iconName: "music.note",
+                                content: "Tone: \(tone)"
+                            )
+                            .padding(.trailing, 8)
+                        }
                     }
+                    
                     
                     if let feasts = orthocalViewModel.calendarDay?.feasts, !feasts.isEmpty {
                         HomePill(
                             iconName: "party.popper",
                             content: "Feasts: \(feasts.joined(separator: ", \n"))",
                             iconOffset: CGPoint(x: -10, y: 0),
-                            textOffset: CGPoint(x: -11, y: 0)
-                        )
+                            textOffset: CGPoint(x: -11, y: 0),
+                            scalesText: true
+                        ).padding(.horizontal, 8)
                     }
+                    
+                    
                                     
                     DailyQuoteCardView(quote: quotesViewModel.getDailyQuote(), viewModel: quotesViewModel)
                     
@@ -75,6 +94,7 @@ struct HomeScreen: View {
                     viewModel: quotesViewModel
                 )
             }
+            .scrollIndicators(.hidden)
             .navigationTitle("🏠 Home")
             .toolbar {
                 NavigationLink(destination: SettingsScreen(viewModel: quotesViewModel)) {
@@ -98,16 +118,65 @@ struct HomeScreen: View {
     
 }
 
-//#Preview {
-//    HomeScreen(
-//        quotesViewModel: {
-//            let viewModel = QuotesViewModel()
-//            // Add sample quotes
-//            viewModel.allQuotes = viewModel.testQuotes
-//
-//            // Add some favorite quotes
-//            viewModel.favoriteQuotes = [viewModel.allQuotes[0]] // Make the first quote a favorite
-//
-//            return viewModel
-//        }())
-//}
+#Preview {
+    HomeScreen(
+        quotesViewModel: {
+            let viewModel = QuotesViewModel()
+            // Add sample quotes
+            viewModel.allQuotes = viewModel.testQuotes
+            // Add some favorite quotes
+            viewModel.favoriteQuotes = [viewModel.allQuotes[0]]
+            return viewModel
+        }(),
+        orthocalViewModel: {
+            let viewModel = OrthocalViewModel()
+            // Add sample calendar day with required properties
+            viewModel.calendarDay = CalendarDay(
+                paschaDistance: 10,
+                julianDayNumber: 2460000,
+                year: 2024,
+                month: 12,
+                day: 25,
+                weekday: 3,
+                tone: 4,
+                titles: ["Nativity of Our Lord"],
+                summaryTitle: "Nativity of Our Lord",
+                feastLevel: 7,
+                feastLevelDescription: "Great Feast of the Lord",
+                feasts: ["The Nativity of Our Lord God and Savior Jesus Christ"],
+                fastLevel: 0,
+                fastLevelDesc: "No Fast",
+                fastException: 0,
+                fastExceptionDesc: "",
+                saints: ["Saint Nicholas the Wonderworker"],
+                serviceNotes: JSONNull(),
+                abbreviatedReadingIndices: [1, 2, 3],
+                readings: [
+                    Reading(
+                        source: "Gospel",
+                        book: "Matthew",
+                        description: "Nativity Gospel",
+                        display: "Matthew 1:18-25",
+                        shortDisplay: "Mt 1:18-25",
+                        passage: [
+                            Passage(
+                                book: "MAT",
+                                chapter: 1,
+                                verse: 18,
+                                content: "Now the birth of Jesus Christ was as follows...",
+                                paragraphStart: true
+                            )
+                        ]
+                    )
+                ],
+                stories: [
+                    Story(
+                        title: "The Nativity of Christ",
+                        story: "The story of Christ's birth..."
+                    )
+                ]
+            )
+            return viewModel
+        }()
+    )
+}

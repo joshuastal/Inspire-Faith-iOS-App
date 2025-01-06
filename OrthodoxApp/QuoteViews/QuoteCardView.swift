@@ -38,6 +38,7 @@ struct QuoteCardView: View {
             RoundedRectangle(cornerRadius: 12)
                 .fill(Color(.systemGray6))  // or any color you want
                 .strokeBorder(Color(.label).opacity(0.075), lineWidth: 2)
+                .shadow(radius: 2)
         )
         // End Card Outline
         .padding(.horizontal)

@@ -12,15 +12,18 @@ struct HomePill: View {
     let content: String
     var iconOffset: CGPoint? = nil
     var textOffset: CGPoint? = nil  // Added text offset
+    var scalesText: Bool = false
     
     var body: some View {
         HStack {
             Image(systemName: iconName)
                 .font(.title2)
+                .frame(width: 24, height: 24)  // Force consistent icon frame
                 .foregroundColor(.accentColor)
                 .offset(x: iconOffset?.x ?? 0, y: iconOffset?.y ?? 0)
             Text(content)
                 .font(.headline)
+                .modifier(ScalingTextModifier(scales: scalesText))
                 .offset(x: textOffset?.x ?? 0, y: textOffset?.y ?? 0)  // Apply text offset
             Spacer()
             
@@ -34,12 +37,46 @@ struct HomePill: View {
         )
         .cornerRadius(12)
         .shadow(radius: 2)
-        .padding(.horizontal)
+    }
+}
+
+
+// Create a custom modifier for the scaling text
+struct ScalingTextModifier: ViewModifier {
+    let scales: Bool
+    
+    func body(content: Content) -> some View {
+        if scales {
+            content
+                .minimumScaleFactor(0.85)
+                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
+        } else {
+            content
+        }
     }
 }
 
 #Preview {
-    HomePill(
-        iconName: "testtube.2", content: "Test"
-    )
+    VStack {
+        HomePill(
+            iconName: "testtube.2", content: "Test"
+        )
+        HomePill(
+            iconName: "testtube.2", content: "Test 2"
+        )
+        
+        HStack {
+            
+            HomePill(
+                iconName: "testtube.2", content: "Test 3"
+            )
+            
+            HomePill(
+                iconName: "testtube.2", content: "Test 4"
+            )
+            
+        }
+    }
+    
 }

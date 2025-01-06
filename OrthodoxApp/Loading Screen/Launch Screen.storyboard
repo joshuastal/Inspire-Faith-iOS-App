@@ -22,38 +22,42 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Inspire Faith" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="GJd-Yh-RWb">
-                                <rect key="frame" x="0.0" y="258.33333333333331" width="393" height="53.333333333333314"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="44"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <activityIndicatorView autoresizesSubviews="NO" opaque="NO" contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="PfP-8F-8VL">
-                                <rect key="frame" x="186" y="363" width="21" height="20"/>
+                                <rect key="frame" x="186" y="350" width="21" height="20"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="Fz1-qz-a4J"/>
+                                    <constraint firstAttribute="height" constant="20" id="IaA-Jt-iW5"/>
                                 </constraints>
                             </activityIndicatorView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Rounded AppIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Mrb-qa-ZUk">
-                                <rect key="frame" x="114" y="435" width="165" height="163"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="LaunchScreenImageSet" translatesAutoresizingMaskIntoConstraints="NO" id="N6W-mt-kn4">
+                                <rect key="frame" x="103" y="426" width="186" height="186"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="186" id="hHM-DC-oR0"/>
+                                </constraints>
                             </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Inspire Faith" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="GJd-Yh-RWb">
+                                <rect key="frame" x="0.0" y="244" width="393" height="53.333333333333329"/>
+                                <fontDescription key="fontDescription" name="HiraMinProN-W6" family="Hiragino Mincho ProN" pointSize="44"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <color key="tintColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Mrb-qa-ZUk" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" constant="114" id="2kh-Ye-Lo1"/>
                             <constraint firstItem="Bcu-3y-fUS" firstAttribute="centerX" secondItem="obG-Y5-kRd" secondAttribute="centerX" id="5cz-MP-9tL"/>
-                            <constraint firstItem="PfP-8F-8VL" firstAttribute="centerX" secondItem="GJd-Yh-RWb" secondAttribute="centerX" id="9V4-7S-QT3"/>
-                            <constraint firstItem="PfP-8F-8VL" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" constant="186" id="Bl3-hX-UJP"/>
-                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="centerX" secondItem="GJd-Yh-RWb" secondAttribute="centerX" id="Q3B-4B-g5h"/>
+                            <constraint firstItem="N6W-mt-kn4" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" constant="103" id="6jN-Px-oIL"/>
+                            <constraint firstItem="GJd-Yh-RWb" firstAttribute="leading" secondItem="obG-Y5-kRd" secondAttribute="leading" id="7FA-7Y-wUb"/>
+                            <constraint firstItem="PfP-8F-8VL" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" constant="186" id="ANa-Dg-2dV"/>
+                            <constraint firstItem="GJd-Yh-RWb" firstAttribute="trailing" secondItem="obG-Y5-kRd" secondAttribute="trailing" id="B6O-eA-nxm"/>
+                            <constraint firstItem="N6W-mt-kn4" firstAttribute="top" secondItem="PfP-8F-8VL" secondAttribute="bottom" constant="56" id="Ish-Gi-dAE"/>
+                            <constraint firstItem="PfP-8F-8VL" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" constant="350" id="LWS-cG-Iab"/>
                             <constraint firstItem="obG-Y5-kRd" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" symbolic="YES" id="SfN-ll-jLj"/>
+                            <constraint firstItem="GJd-Yh-RWb" firstAttribute="top" secondItem="Bcu-3y-fUS" secondAttribute="top" constant="185.00000000000003" id="TCJ-dS-r9O"/>
                             <constraint firstAttribute="bottom" secondItem="obG-Y5-kRd" secondAttribute="bottom" constant="20" id="Y44-ml-fuU"/>
-                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="bottom" secondItem="Mrb-qa-ZUk" secondAttribute="bottom" constant="220" id="hs4-vE-FK1"/>
-                            <constraint firstItem="Mrb-qa-ZUk" firstAttribute="top" secondItem="PfP-8F-8VL" secondAttribute="bottom" constant="52" id="ipU-FV-JLG"/>
-                            <constraint firstItem="GJd-Yh-RWb" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="bottom" multiplier="1/3" constant="1" id="moa-c2-u7t"/>
-                            <constraint firstItem="PfP-8F-8VL" firstAttribute="top" secondItem="GJd-Yh-RWb" secondAttribute="bottom" constant="51.333333333333314" id="tph-fE-CK5"/>
-                            <constraint firstItem="Mrb-qa-ZUk" firstAttribute="centerX" secondItem="PfP-8F-8VL" secondAttribute="centerX" id="vxs-Vh-d8L"/>
-                            <constraint firstItem="GJd-Yh-RWb" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" symbolic="YES" id="x7j-FC-K8j"/>
+                            <constraint firstItem="PfP-8F-8VL" firstAttribute="centerX" secondItem="N6W-mt-kn4" secondAttribute="centerX" id="eqe-QE-cBF"/>
+                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="bottom" secondItem="N6W-mt-kn4" secondAttribute="bottom" constant="206" id="h13-u2-8mx"/>
+                            <constraint firstItem="PfP-8F-8VL" firstAttribute="top" secondItem="GJd-Yh-RWb" secondAttribute="bottom" constant="52.666666666666629" id="jup-zi-vSi"/>
+                            <constraint firstItem="GJd-Yh-RWb" firstAttribute="centerX" secondItem="PfP-8F-8VL" secondAttribute="centerX" id="yfG-D9-KDJ"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -63,7 +67,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Rounded AppIcon" width="354.66665649414062" height="354.66665649414062"/>
+        <image name="LaunchScreenImageSet" width="170.66667175292969" height="170.66667175292969"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
