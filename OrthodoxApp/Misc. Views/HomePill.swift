@@ -13,6 +13,9 @@ struct HomePill: View {
     var iconOffset: CGPoint? = nil
     var textOffset: CGPoint? = nil  // Added text offset
     var scalesText: Bool = false
+    var lineLimit: Int = 2
+    var maxWidth: CGFloat? = nil  // Add optional max width parameter
+
     
     var body: some View {
         HStack {
@@ -21,15 +24,14 @@ struct HomePill: View {
                 .frame(width: 24, height: 24)  // Force consistent icon frame
                 .foregroundColor(.accentColor)
                 .offset(x: iconOffset?.x ?? 0, y: iconOffset?.y ?? 0)
+            
             Text(content)
                 .font(.headline)
-                .modifier(ScalingTextModifier(scales: scalesText))
+                .modifier(ScalingTextModifier(scales: scalesText, lineLimit: lineLimit))
                 .offset(x: textOffset?.x ?? 0, y: textOffset?.y ?? 0)  // Apply text offset
-            Spacer()
-            
         }
         .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: maxWidth ?? .infinity) // Use maxWidth if provided
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .fill(Color(.systemGray6))
@@ -44,12 +46,13 @@ struct HomePill: View {
 // Create a custom modifier for the scaling text
 struct ScalingTextModifier: ViewModifier {
     let scales: Bool
+    var lineLimit: Int = 2
     
     func body(content: Content) -> some View {
         if scales {
             content
                 .minimumScaleFactor(0.85)
-                .lineLimit(2)
+                .lineLimit(lineLimit)
                 .fixedSize(horizontal: false, vertical: true)
         } else {
             content

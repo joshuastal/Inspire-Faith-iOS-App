@@ -54,10 +54,6 @@ class QuotesViewModel: ObservableObject {
     }
     
         
-    @MainActor
-    func updateDailyQuote() {
-        dailyQuote = getDailyQuote()
-    }
     
     
     func addToFavorites(quote: QuoteObject) {
@@ -153,5 +149,12 @@ class QuotesViewModel: ObservableObject {
         print("Returning quote for index \(targetIndex): \(quote.quote)")
         return quote
     }
+    
+    
+    @MainActor
+    func updateDailyQuote() {
+        dailyQuote = getDailyQuote()
+    }
+    
 }
 

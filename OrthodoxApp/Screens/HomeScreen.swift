@@ -27,13 +27,40 @@ struct HomeScreen: View {
         // Multiple conditions with a switch
         switch level {
         case "No Fast":
+            return "🍽️"
+        case
+            "Fast — Wine and Oil are Allowed",
+            "Lenten Fast — Wine and Oil are Allowed",
+            "Nativity Fast — Wine and Oil are Allowed",
+            "Apostles Fast — Wine and Oil are Allowed",
+            "Dormition Fast — Wine and Oil are Allowed"
+        :
+            return "🍷 🫒"
+        case
+            "Fast — Fish, Wine and Oil are Allowed",
+            "Lenten Fast — Fish, Wine and Oil are Allowed",
+            "Lenten Fast — Wine, Oil and Caviar are Allowed",
+            "Nativity Fast — Fish, Wine and Oil are Allowed",
+            "Apostles Fast — Fish, Wine and Oil are Allowed",
+            "Dormition Fast — Fish, Wine and Oil are Allowed"
+        :
+            return "🐟 🍷 🫒"
+        case "Fast — Meat Fast":
+            return "🧀 🐟 🍷 🫒"
+        case
+            "Fast",
+            "Lenten Fast — No overrides",
+            "Lenten Fast",
+            "Nativity Fast",
+            "Dormition Fast"
+        :
+            return "🥬 🥕 🍎"
+        case
+            "Lenten Fast — Strict Fast",
+            "Nativity Fast — Strict Fast",
+            "Apostles Fast"
+        :
             return "🚫"
-        case "Fast — Wine and Oil are Allowed":
-            return "🥩 🧀 🐟"
-        case "Fast — Fish, Wine and Oil are Allowed":
-            return "🥩 🧀"
-        case "Fast":
-            return "💀"
         default:
             return "Fast \(level)"
         }
@@ -45,21 +72,24 @@ struct HomeScreen: View {
                 VStack (spacing: 16) {
                     
                     HStack (spacing: 8) {
+                        
+                        // Fasting Block
                         if orthocalViewModel.calendarDay != nil {
                             HomePill(
                                 iconName: "fork.knife",
-                                content: "Fast: \(fastTitle)",
-                                iconOffset: CGPoint(x: -15, y: 0),
-                                textOffset: CGPoint(x: -15, y: 0),
-                                scalesText: true
+                                content: "Fast: \(fastTitle)"
                             )
                             .padding(.leading, 8)
                         }
                         
+                        // Tone Block
                         if let tone = orthocalViewModel.calendarDay?.tone {
                             HomePill (
                                 iconName: "music.note",
-                                content: "Tone: \(tone)"
+                                content: "Tone: \(tone)",
+                                iconOffset: CGPoint(x: -5, y: 0),
+                                textOffset: CGPoint(x: -6, y: 0),
+                                maxWidth: 150
                             )
                             .padding(.trailing, 8)
                         }
@@ -77,7 +107,7 @@ struct HomeScreen: View {
                     }
                     
                     
-                                    
+                    
                     DailyQuoteCardView(
                         quote: quotesViewModel.dailyQuote ?? quotesViewModel.testQuote,
                         viewModel: quotesViewModel
@@ -88,7 +118,7 @@ struct HomeScreen: View {
                     Spacer()
                 }
             }
-            .onAppear {
+            .task {
                 
                 quotesViewModel.updateDailyQuote()
                 
@@ -96,6 +126,7 @@ struct HomeScreen: View {
                 //    isNotificationsDenied: $isNotificationsDenied,
                 //    viewModel: quotesViewModel
                 //)
+                
             }
             .scrollIndicators(.hidden)
             .navigationTitle("🏠 Home")
@@ -121,65 +152,3 @@ struct HomeScreen: View {
     
 }
 
-#Preview {
-    HomeScreen(
-        quotesViewModel: {
-            let viewModel = QuotesViewModel()
-            // Add sample quotes
-            viewModel.allQuotes = viewModel.testQuotes
-            // Add some favorite quotes
-            viewModel.favoriteQuotes = [viewModel.allQuotes[0]]
-            return viewModel
-        }(),
-        orthocalViewModel: {
-            let viewModel = OrthocalViewModel()
-            // Add sample calendar day with required properties
-            viewModel.calendarDay = CalendarDay(
-                paschaDistance: 10,
-                julianDayNumber: 2460000,
-                year: 2024,
-                month: 12,
-                day: 25,
-                weekday: 3,
-                tone: 4,
-                titles: ["Nativity of Our Lord"],
-                summaryTitle: "Nativity of Our Lord",
-                feastLevel: 7,
-                feastLevelDescription: "Great Feast of the Lord",
-                feasts: ["The Nativity of Our Lord God and Savior Jesus Christ"],
-                fastLevel: 0,
-                fastLevelDesc: "No Fast",
-                fastException: 0,
-                fastExceptionDesc: "",
-                saints: ["Saint Nicholas the Wonderworker"],
-                serviceNotes: JSONNull(),
-                abbreviatedReadingIndices: [1, 2, 3],
-                readings: [
-                    Reading(
-                        source: "Gospel",
-                        book: "Matthew",
-                        description: "Nativity Gospel",
-                        display: "Matthew 1:18-25",
-                        shortDisplay: "Mt 1:18-25",
-                        passage: [
-                            Passage(
-                                book: "MAT",
-                                chapter: 1,
-                                verse: 18,
-                                content: "Now the birth of Jesus Christ was as follows...",
-                                paragraphStart: true
-                            )
-                        ]
-                    )
-                ],
-                stories: [
-                    Story(
-                        title: "The Nativity of Christ",
-                        story: "The story of Christ's birth..."
-                    )
-                ]
-            )
-            return viewModel
-        }()
-    )
-}

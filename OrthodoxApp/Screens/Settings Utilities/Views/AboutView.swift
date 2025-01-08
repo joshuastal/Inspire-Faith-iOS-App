@@ -19,9 +19,9 @@ struct AboutView: View {
                         .bold()
                     
                     VStack(alignment: .leading, spacing: 20) {
-                        Text("Inspire Faith is an Android Application that displays various quotes that pertain to the Christian faith. The quotes are mostly from Orthodox Christian saints or other Orthodox Christians, this application howevever, is not exclusive for Orthodox Christian use nor does it contain Orthodox Christian quotes exclusively.")
+                        Text("Inspire Faith is an iOS Application that displays various quotes that pertain to the Christian faith. The quotes are mostly from Orthodox Christian saints or other Orthodox Christians, this application howevever, is not exclusive for Orthodox Christian use nor does it contain Orthodox Christian quotes exclusively.")
                         
-                        Text("The application retrieves the quotes from a Firestore database. It also allows users to favorite and unfavorite specific quotes, display only favorite quotes, and even add their own local quotes should the user so desire.")
+                        Text("The application retrieves the quotes from a Firestore database. It also allows users to favorite and unfavorite specific quotes, display only favorite quotes, see today's fasting rule, today's tone, and even if there are any celebratory feasts today! The daily readings are also available in the Readings section of the app.")
                     }
                     
                     Text("Version 1.0.0")
