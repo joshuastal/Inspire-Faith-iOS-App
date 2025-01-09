@@ -35,7 +35,7 @@ struct ContentView: View {
                 .tabItem {
                     Image(systemName: selection == 3 ? "book" : "book.closed")
                         .symbolRenderingMode(.monochrome)
-                    Text("Readings")
+                    Text("Devotions")
                 }
                 .tag(3)
         }

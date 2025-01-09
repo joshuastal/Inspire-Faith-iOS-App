@@ -14,15 +14,15 @@ struct CommemorationCardView: View {
     
     private var formattedStoryTitle: String {
             let storyTitle = story.title
-                .replacingOccurrences(of: "Our", with: "")
-                .replacingOccurrences(of: "Venerable", with: "")
-                .replacingOccurrences(of: "Righteous", with: "")
+                .replacingOccurrences(of: "Our ", with: "")
+                .replacingOccurrences(of: "Venerable ", with: "")
+                .replacingOccurrences(of: "Righteous ", with: "")
                 .replacingOccurrences(of: "The ", with: "")
-                .replacingOccurrences(of: "Holy", with: "")
+                .replacingOccurrences(of: "Holy ", with: "")
                 .replacingOccurrences(of: "Father", with: "Fr.")
+                .replacingOccurrences(of: "St", with: "St.")
                 .replacingOccurrences(of: "Saint", with: "St.")
                 .replacingOccurrences(of: "Mother", with: "Mthr.")
-                .replacingOccurrences(of: "St", with: "St.")
                 .replacingOccurrences(
                     of: "The Twenty Thousand Martyrs burned to death in their church in Nicomedia (ca. 304).",
                     with: "20,000 Burned Nicomedia Martyrs"

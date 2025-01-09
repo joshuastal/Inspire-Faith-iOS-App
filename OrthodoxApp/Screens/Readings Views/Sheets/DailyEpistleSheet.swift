@@ -30,7 +30,7 @@ struct DailyEpistleSheet: View {
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Text("Daily Epistle Readings")
+                    Text("Daily Epistle Devotions")
                         .font(.system(size: 24, weight: .bold))
                         //.padding(.trailing, 15)
                 }

@@ -25,7 +25,7 @@ struct CommemorationSheet: View {
                 .padding()
             }
             .toolbar {
-                ToolbarItem {
+                ToolbarItem(placement: .topBarLeading) {
                     Text("Commemorations")
                         .font(.system(size: 24, weight: .bold))
                         .padding(.trailing, 45)

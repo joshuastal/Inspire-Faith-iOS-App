@@ -14,7 +14,7 @@ struct HomeScreen: View {
     let db = Firestore.firestore()
     @ObservedObject var quotesViewModel: QuotesViewModel
     @ObservedObject var orthocalViewModel: OrthocalViewModel  // Add this for calendar data
-    @State private var isNotificationsDenied = false
+    //@State private var isNotificationsDenied = false
     
     var fastLevel: String? {
         orthocalViewModel.calendarDay?.fastLevelDesc
@@ -25,44 +25,60 @@ struct HomeScreen: View {
         guard let level = fastLevel else { return "" }
         
         // Multiple conditions with a switch
+//        switch level {
+//        case "No Fast":
+//            return "🍽️"
+//        case
+//            "Fast — Wine and Oil are Allowed",
+//            "Lenten Fast — Wine and Oil are Allowed",
+//            "Nativity Fast — Wine and Oil are Allowed",
+//            "Apostles Fast — Wine and Oil are Allowed",
+//            "Dormition Fast — Wine and Oil are Allowed"
+//        :
+//            return "🍷 🫒"
+//        case
+//            "Fast — Fish, Wine and Oil are Allowed",
+//            "Lenten Fast — Fish, Wine and Oil are Allowed",
+//            "Lenten Fast — Wine, Oil and Caviar are Allowed",
+//            "Nativity Fast — Fish, Wine and Oil are Allowed",
+//            "Apostles Fast — Fish, Wine and Oil are Allowed",
+//            "Dormition Fast — Fish, Wine and Oil are Allowed"
+//        :
+//            return "🐟 🍷 🫒"
+//        case "Fast — Meat Fast":
+//            return "🧀 🐟 🍷 🫒"
+//        case
+//            "Fast",
+//            "Lenten Fast — No overrides",
+//            "Lenten Fast",
+//            "Nativity Fast",
+//            "Dormition Fast",
+//            "Apostles Fast"
+//        :
+//            return "🥬 🥕 🍎"
+//        case
+//            "Lenten Fast — Strict Fast",
+//            "Nativity Fast — Strict Fast"
+//        :
+//            return "🚫"
+//        default:
+//            return "Fast \(level)"
+//        }
         switch level {
-        case "No Fast":
-            return "🍽️"
-        case
-            "Fast — Wine and Oil are Allowed",
-            "Lenten Fast — Wine and Oil are Allowed",
-            "Nativity Fast — Wine and Oil are Allowed",
-            "Apostles Fast — Wine and Oil are Allowed",
-            "Dormition Fast — Wine and Oil are Allowed"
-        :
-            return "🍷 🫒"
-        case
-            "Fast — Fish, Wine and Oil are Allowed",
-            "Lenten Fast — Fish, Wine and Oil are Allowed",
-            "Lenten Fast — Wine, Oil and Caviar are Allowed",
-            "Nativity Fast — Fish, Wine and Oil are Allowed",
-            "Apostles Fast — Fish, Wine and Oil are Allowed",
-            "Dormition Fast — Fish, Wine and Oil are Allowed"
-        :
-            return "🐟 🍷 🫒"
-        case "Fast — Meat Fast":
-            return "🧀 🐟 🍷 🫒"
-        case
-            "Fast",
-            "Lenten Fast — No overrides",
-            "Lenten Fast",
-            "Nativity Fast",
-            "Dormition Fast"
-        :
-            return "🥬 🥕 🍎"
-        case
-            "Lenten Fast — Strict Fast",
-            "Nativity Fast — Strict Fast",
-            "Apostles Fast"
-        :
-            return "🚫"
-        default:
-            return "Fast \(level)"
+            case "No Fast":
+                return "🍽️"
+            case let x where x.contains("Strict Fast"):
+                return "🚫"
+            case let x where x.contains("Fish, Wine and Oil are Allowed") || x.contains("Wine, Oil and Caviar are Allowed"):
+                return "🐟🍷🫒"
+            case let x where x.contains("Wine and Oil are Allowed"):
+                return "🍷🫒"
+            case "Fast — Meat Fast":
+                return "🧀🐟🍷🫒"
+            case let x where x.hasSuffix("Fast") || x.contains("Fast — No overrides"):
+                return "🥬🥕🍎"
+            default:
+                return "Fast \(level)"
         }
     }
     
@@ -136,16 +152,16 @@ struct HomeScreen: View {
                         .foregroundColor(.primary)
                 }
             }
-            .alert("Notifications Disabled", isPresented: $isNotificationsDenied) {
-                Button("Cancel", role: .cancel) { }
-                Button("Open Settings") {
-                    if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
-                        UIApplication.shared.open(settingsURL)
-                    }
-                }
-            } message: {
-                Text("Please enable notifications in Settings to use this feature.")
-            }
+//            .alert("Notifications Disabled", isPresented: $isNotificationsDenied) {
+//                Button("Cancel", role: .cancel) { }
+//                Button("Open Settings") {
+//                    if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+//                        UIApplication.shared.open(settingsURL)
+//                    }
+//                }
+//            } message: {
+//                Text("Please enable notifications in Settings to use this feature.")
+//            }
         }
     }
     

@@ -23,7 +23,7 @@ struct OrthocalView: View {
                 // Daily Readings
                 DataButtonView(
                     iconName: "book.fill",
-                    title: "Daily Epistle Readings"
+                    title: "Daily Epistle Devotions"
                 ) {
                     // First show the sheet with existing data
                     showingEpistleReadings = true
@@ -31,7 +31,7 @@ struct OrthocalView: View {
                 
                 DataButtonView(
                     iconName: "book.fill",
-                    title: "Daily Gospel Readings"
+                    title: "Daily Gospel Devotions"
                 ) {
                     // First show the sheet with existing data
                     showingGospelReadings = true
@@ -40,7 +40,7 @@ struct OrthocalView: View {
                 if viewModel.hasProphecyReadings {
                     DataButtonView(
                         iconName: "book.fill",
-                        title: "Daily Prophecy Readings"
+                        title: "Daily Prophecy Devotions"
                     ) {
                         showingProphecyReadings = true
                     }
@@ -64,7 +64,7 @@ struct OrthocalView: View {
             if let calendarDay = viewModel.calendarDay {
                 DailyEpistleSheet(readings: calendarDay.readings)
             } else {
-                ProgressView("Loading readings...")
+                ProgressView("Loading devotions...")
                     .task {  // Changed from onAppear
                         await viewModel.loadCalendarDay()
                     }
@@ -74,7 +74,7 @@ struct OrthocalView: View {
             if let calendarDay = viewModel.calendarDay {
                 DailyGospelSheet(readings: calendarDay.readings)
             } else {
-                ProgressView("Loading readings...")
+                ProgressView("Loading devotions...")
                     .task {  // Changed from onAppear
                         await viewModel.loadCalendarDay()
                     }
@@ -84,7 +84,7 @@ struct OrthocalView: View {
             if let calendarDay = viewModel.calendarDay {
                 DailyProphecySheet(readings: calendarDay.readings)
             } else {
-                ProgressView("Loading readings...")
+                ProgressView("Loading devotions...")
                     .task {  // Changed from onAppear
                         await viewModel.loadCalendarDay()
                     }

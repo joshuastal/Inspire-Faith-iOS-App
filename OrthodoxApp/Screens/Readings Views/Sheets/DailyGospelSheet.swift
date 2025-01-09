@@ -30,7 +30,7 @@ struct DailyGospelSheet: View {
             }
             .toolbar {
                 ToolbarItem (placement: .topBarLeading) {
-                    Text("Daily Gospel Readings")
+                    Text("Daily Gospel Devotions")
                         .font(.system(size: 24, weight: .bold))
                         .padding(.trailing, 15)
                 }
