@@ -6,4 +6,4 @@ The application retrieves the quotes from a Firestore database. It also allows u
 
 The Gregorian Calendar is used to determine the fasting rules and tone of the day. It also determines if there are any celebratory feasts today. With regards to fasting, the Home Screen shows what Orthodox Christians are allowed to eat that day!
 
-While the quotes and daily verses in Inspire Faith are from a privately created and managed database, the other data is from the publicly available website: [orthocal.info](orthocal.info)
+While the quotes and daily verses in Inspire Faith are from a privately created and managed database, the other data is from the publicly available website: [orthocal.info](https://orthocal.info)
