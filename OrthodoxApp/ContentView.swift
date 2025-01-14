@@ -7,7 +7,7 @@ import FirebaseFirestore
 struct ContentView: View {
     let db = Firestore.firestore()
     @ObservedObject var quotesViewModel: QuotesViewModel
-    @ObservedObject var orthocalViewModel: OrthocalViewModel  // Changed from @StateObject
+    @ObservedObject var orthocalViewModel: OrthocalViewModel
     @State private var selection = 1
     
     var body: some View {
@@ -35,7 +35,7 @@ struct ContentView: View {
                 .tabItem {
                     Image(systemName: selection == 3 ? "book" : "book.closed")
                         .symbolRenderingMode(.monochrome)
-                    Text("Devotions")
+                    Text("Readings")
                 }
                 .tag(3)
         }

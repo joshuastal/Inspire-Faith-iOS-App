@@ -19,6 +19,7 @@ struct CommemorationCardView: View {
                 .replacingOccurrences(of: "Righteous ", with: "")
                 .replacingOccurrences(of: "The ", with: "")
                 .replacingOccurrences(of: "Holy ", with: "")
+                .replacingOccurrences(of: "Fathers", with: "Frs.")
                 .replacingOccurrences(of: "Father", with: "Fr.")
                 .replacingOccurrences(of: "St", with: "St.")
                 .replacingOccurrences(of: "Saint", with: "St.")

@@ -111,13 +111,13 @@ struct HomeScreen: View {
                         }
                     }
                     
-                    
+                    // Feast Block
                     if let feasts = orthocalViewModel.calendarDay?.feasts, !feasts.isEmpty {
                         HomePill(
                             iconName: "party.popper",
                             content: "Feasts: \(feasts.joined(separator: ", \n"))",
-                            iconOffset: CGPoint(x: -10, y: 0),
-                            textOffset: CGPoint(x: -11, y: 0),
+                            //iconOffset: CGPoint(x: -10, y: 0),
+                            //textOffset: CGPoint(x: -11, y: 0),
                             scalesText: true
                         ).padding(.horizontal, 8)
                     }

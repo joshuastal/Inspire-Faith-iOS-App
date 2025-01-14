@@ -18,53 +18,54 @@ struct OrthocalView: View {
     @State private var showingProphecyReadings = false
     
     var body: some View {
-        VStack(spacing: 20) {
-            VStack(spacing: 16) {
-                // Daily Readings
-                DataButtonView(
-                    iconName: "book.fill",
-                    title: "Daily Epistle Devotions"
-                ) {
-                    // First show the sheet with existing data
-                    showingEpistleReadings = true
-                }
-                
-                DataButtonView(
-                    iconName: "book.fill",
-                    title: "Daily Gospel Devotions"
-                ) {
-                    // First show the sheet with existing data
-                    showingGospelReadings = true
-                }
-                
-                if viewModel.hasProphecyReadings {
+        ScrollView{
+                VStack(spacing: 16) {
+                    // Daily Readings
                     DataButtonView(
                         iconName: "book.fill",
-                        title: "Daily Prophecy Devotions"
+                        title: "Daily Epistle Readings"
                     ) {
-                        showingProphecyReadings = true
+                        // First show the sheet with existing data
+                        showingEpistleReadings = true
                     }
+                    
+                    DataButtonView(
+                        iconName: "book.fill",
+                        title: "Daily Gospel Readings"
+                    ) {
+                        // First show the sheet with existing data
+                        showingGospelReadings = true
+                    }
+                    
+                    if viewModel.hasProphecyReadings {
+                        DataButtonView(
+                            iconName: "book.fill",
+                            title: "Daily Prophecy Readings"
+                        ) {
+                            showingProphecyReadings = true
+                        }
+                    }
+                    
+                    DataButtonView(
+                        iconName: "person.fill",
+                        title: "Commemorations"
+                    ) {
+                        // First show the sheet with existing data
+                        showingCommemorations = true
+                    }
+                    
+                    ReadingPrayerCardView()
+
+                    Spacer()
                 }
-                
-                DataButtonView(
-                    iconName: "person.fill",
-                    title: "Commemorations"
-                ) {
-                    // First show the sheet with existing data
-                    showingCommemorations = true
-                }
-                
-                
-            }
-            .padding(.horizontal)
+                .padding(.horizontal, 8)
             
-            Spacer()
         }
         .sheet(isPresented: $showingEpistleReadings) {
             if let calendarDay = viewModel.calendarDay {
                 DailyEpistleSheet(readings: calendarDay.readings)
             } else {
-                ProgressView("Loading devotions...")
+                ProgressView("Loading readings...")
                     .task {  // Changed from onAppear
                         await viewModel.loadCalendarDay()
                     }
@@ -74,7 +75,7 @@ struct OrthocalView: View {
             if let calendarDay = viewModel.calendarDay {
                 DailyGospelSheet(readings: calendarDay.readings)
             } else {
-                ProgressView("Loading devotions...")
+                ProgressView("Loading readings...")
                     .task {  // Changed from onAppear
                         await viewModel.loadCalendarDay()
                     }
@@ -84,7 +85,7 @@ struct OrthocalView: View {
             if let calendarDay = viewModel.calendarDay {
                 DailyProphecySheet(readings: calendarDay.readings)
             } else {
-                ProgressView("Loading devotions...")
+                ProgressView("Loading readings...")
                     .task {  // Changed from onAppear
                         await viewModel.loadCalendarDay()
                     }

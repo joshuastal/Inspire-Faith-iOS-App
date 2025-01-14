@@ -30,7 +30,7 @@ struct DailyProphecySheet: View {
             }
             .toolbar {
                 ToolbarItem (placement: .topBarLeading) {
-                    Text("Daily Prophecy Devotions")
+                    Text("Daily Prophecy Readings")
                         .font(.system(size: 24, weight: .bold))
                         .padding(.trailing, 15)
                 }
