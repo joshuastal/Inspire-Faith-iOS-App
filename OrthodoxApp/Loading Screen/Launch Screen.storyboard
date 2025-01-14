@@ -28,16 +28,11 @@
                                     <constraint firstAttribute="height" constant="20" id="IaA-Jt-iW5"/>
                                 </constraints>
                             </activityIndicatorView>
-<<<<<<< Updated upstream
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="LaunchScreenImageSet" translatesAutoresizingMaskIntoConstraints="NO" id="N6W-mt-kn4">
                                 <rect key="frame" x="103" y="426" width="186" height="186"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="186" id="hHM-DC-oR0"/>
                                 </constraints>
-=======
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="asdf" translatesAutoresizingMaskIntoConstraints="NO" id="Mrb-qa-ZUk">
-                                <rect key="frame" x="114" y="435" width="165" height="163"/>
->>>>>>> Stashed changes
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Inspire Faith" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="GJd-Yh-RWb">
                                 <rect key="frame" x="0.0" y="244" width="393" height="53.333333333333329"/>
@@ -72,11 +67,7 @@
         </scene>
     </scenes>
     <resources>
-<<<<<<< Updated upstream
         <image name="LaunchScreenImageSet" width="170.66667175292969" height="170.66667175292969"/>
-=======
-        <image name="asdf" width="170.66667175292969" height="170.66667175292969"/>
->>>>>>> Stashed changes
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
