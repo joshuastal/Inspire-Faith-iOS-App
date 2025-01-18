@@ -34,6 +34,10 @@ struct AboutView: View {
                         Text("The Gregorian Calendar is used to determine the fasting rules and tone of the day. It also determines if there are any celebratory feasts today. With regards to fasting, the Home Screen shows what Orthodox Christians are allowed to eat that day!")
                         
                         attributedText
+                        
+                        Text("Fasting Legend:\n🧀🐟🍷🫒 - Dairy, Fish, Wine, and Oil allowed\n🐟🍷🫒 - Only Fish, Wine, and Oil allowed.\n🥬🥕🍎 - Essentially Vegan food allowed.\n🍷🫒 - Only Wine and Oil allowed.\n🍽️ - No Fast.\n🚫 - Essentially only Vegan food allowed.")
+                        
+                        
                     }
                     
                     Text("Version \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "No version number...")")

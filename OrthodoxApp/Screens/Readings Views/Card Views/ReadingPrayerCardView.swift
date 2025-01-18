@@ -9,15 +9,14 @@ struct ReadingPrayerCardView: View {
             VStack(alignment: .leading) {
                 
                 HStack {
-                    Text("Prayer Before Reading")
-                        .font(.custom("AvenirLTStd-Heavy", size: 24))
-                        .foregroundColor(.primary)
+                    
+                    Image(systemName: "cross.fill")
+                        .font(.title2)
+                        .foregroundColor(.accentColor)
                         .padding(.top, 8)
                     
-                    Spacer()
-                    
-                    Image(systemName: "book.fill")
-                        .font(.title2)
+                    Text("Prayer Before Reading")
+                        .font(.custom("AvenirLTStd-Heavy", size: 24))
                         .foregroundColor(.accentColor)
                         .padding(.top, 8)
                 }

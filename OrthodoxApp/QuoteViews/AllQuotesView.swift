@@ -6,41 +6,39 @@ struct AllQuotesView: View {
     let allQuotes: [QuoteObject]
     let viewModel: QuotesViewModel
     
-    @State private var lastTapTime: Date = Date()
-    @State private var currentQuoteIndex: Int = 0
-    @State private var isSharing: Bool = false  // Track sharing state
+    // Keep track of which quote is currently visible
+        @State private var currentQuoteIndex: Int = 0
     
     var body: some View {
-        GeometryReader { proxy in
-            TabView(selection: $currentQuoteIndex) {
-                ForEach(Array(allQuotes.enumerated()), id: \.element.id) { index, quote in
-                    QuoteCardView(quote: quote, viewModel: viewModel)
-                        .padding(.bottom, 75)
-                        .tag(index)
+        ZStack {
+            GeometryReader { proxy in
+                TabView {
+                    ForEach(allQuotes) { quote in
+                        QuoteCardView(quote: quote, viewModel: viewModel)
+                            .padding(.bottom, (75))
+                    }
+                    .rotationEffect(.degrees(-90)) // Rotate content
+                    .frame(
+                        width: proxy.size.width,
+                        height: proxy.size.height
+                    )
                 }
-                .rotationEffect(.degrees(-90))
                 .frame(
-                    width: proxy.size.width,
-                    height: proxy.size.height
+                    width: proxy.size.height, // Height & width swap
+                    height: proxy.size.width
                 )
-            }
-            .frame(
-                width: proxy.size.height,
-                height: proxy.size.width
-            )
-            .rotationEffect(.degrees(90), anchor: .topLeading)
-            .offset(x: proxy.size.width)
-            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-            .onAppear {
-                // Reset TabView state when appearing
-                if isSharing {
-                    isSharing = false
-                }
+                .rotationEffect(.degrees(90), anchor: .topLeading) // Rotate TabView
+                .offset(x: proxy.size.width) // Offset back into screens bounds
+                .tabViewStyle(
+                    PageTabViewStyle(indexDisplayMode: .never)
+                )
+                
             }
         }
+        
+        
     }
 }
-
 
 
 

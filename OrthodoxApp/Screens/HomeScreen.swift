@@ -17,68 +17,50 @@ struct HomeScreen: View {
     //@State private var isNotificationsDenied = false
     
     var fastLevel: String? {
-        orthocalViewModel.calendarDay?.fastLevelDesc
+        orthocalViewModel.calendarDay?.fastExceptionDesc
     }
+    
+    
+    var FastExceptions = [
+        "",
+        "Wine and Oil are Allowed",
+        "Fish, Wine and Oil are Allowed",
+        "Wine and Oil are Allowed",
+        "Fish, Wine and Oil are Allowed",
+        "Wine is Allowed",
+        "Wine, Oil and Caviar are Allowed",
+        "Meat Fast",
+        "Strict Fast (Wine and Oil)",
+        "Strict Fast",
+        "No overrides",
+        "Fast Free",
+    ]
+    
     
     // Add a computed property for the title logic
     var fastTitle: String {
         guard let level = fastLevel else { return "" }
         
         // Multiple conditions with a switch
-//        switch level {
-//        case "No Fast":
-//            return "🍽️"
-//        case
-//            "Fast — Wine and Oil are Allowed",
-//            "Lenten Fast — Wine and Oil are Allowed",
-//            "Nativity Fast — Wine and Oil are Allowed",
-//            "Apostles Fast — Wine and Oil are Allowed",
-//            "Dormition Fast — Wine and Oil are Allowed"
-//        :
-//            return "🍷 🫒"
-//        case
-//            "Fast — Fish, Wine and Oil are Allowed",
-//            "Lenten Fast — Fish, Wine and Oil are Allowed",
-//            "Lenten Fast — Wine, Oil and Caviar are Allowed",
-//            "Nativity Fast — Fish, Wine and Oil are Allowed",
-//            "Apostles Fast — Fish, Wine and Oil are Allowed",
-//            "Dormition Fast — Fish, Wine and Oil are Allowed"
-//        :
-//            return "🐟 🍷 🫒"
-//        case "Fast — Meat Fast":
-//            return "🧀 🐟 🍷 🫒"
-//        case
-//            "Fast",
-//            "Lenten Fast — No overrides",
-//            "Lenten Fast",
-//            "Nativity Fast",
-//            "Dormition Fast",
-//            "Apostles Fast"
-//        :
-//            return "🥬 🥕 🍎"
-//        case
-//            "Lenten Fast — Strict Fast",
-//            "Nativity Fast — Strict Fast"
-//        :
-//            return "🚫"
-//        default:
-//            return "Fast \(level)"
-//        }
         switch level {
-            case "No Fast":
-                return "🍽️"
-            case let x where x.contains("Strict Fast"):
-                return "🚫"
-            case let x where x.contains("Fish, Wine and Oil are Allowed") || x.contains("Wine, Oil and Caviar are Allowed"):
-                return "🐟🍷🫒"
-            case let x where x.contains("Wine and Oil are Allowed"):
-                return "🍷🫒"
-            case "Fast — Meat Fast":
-                return "🧀🐟🍷🫒"
-            case let x where x.hasSuffix("Fast") || x.contains("Fast — No overrides"):
-                return "🥬🥕🍎"
-            default:
-                return "Fast \(level)"
+        case "", "Fast Free":
+            return "🍽️"
+        case
+            "Wine and Oil are Allowed", "Wine is Allowed", "Strict Fast (Wine and Oil)":
+            return "🍷 🫒"
+        case
+            "Fish, Wine and Oil are Allowed", "Wine, Oil and Caviar are Allowed":
+            return "🐟 🍷 🫒"
+        case "Meat Fast":
+            return "🧀 🐟 🍷 🫒"
+        case
+            "Fast", "No overrides":
+            return "🥬 🥕 🍎"
+        case
+            "Strict Fast":
+            return "🚫"
+        default:
+            return "Fast \(level)"
         }
     }
     

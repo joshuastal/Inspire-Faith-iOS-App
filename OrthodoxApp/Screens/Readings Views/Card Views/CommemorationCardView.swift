@@ -13,31 +13,42 @@ struct CommemorationCardView: View {
 
     
     private var formattedStoryTitle: String {
-            let storyTitle = story.title
-                .replacingOccurrences(of: "Our ", with: "")
-                .replacingOccurrences(of: "Venerable ", with: "")
-                .replacingOccurrences(of: "Righteous ", with: "")
-                .replacingOccurrences(of: "The ", with: "")
-                .replacingOccurrences(of: "Holy ", with: "")
-                .replacingOccurrences(of: "Fathers", with: "Frs.")
-                .replacingOccurrences(of: "Father", with: "Fr.")
-                .replacingOccurrences(of: "St", with: "St.")
-                .replacingOccurrences(of: "Saint", with: "St.")
-                .replacingOccurrences(of: "Mother", with: "Mthr.")
-                .replacingOccurrences(
-                    of: "The Twenty Thousand Martyrs burned to death in their church in Nicomedia (ca. 304).",
-                    with: "20,000 Burned Nicomedia Martyrs"
-                )
-
-            // Find the range of "," and truncate if found
-            if storyTitle.contains("20,000") {
-                return storyTitle
-            } else if let range = storyTitle.range(of: ",") {
-                return String(storyTitle[..<range.lowerBound]) // Truncate at ","
-            } else {
-                return storyTitle
+        let replacements: [(String, String)] = [
+            ("Our ", ""),
+            ("Venerable ", ""),
+            ("Righteous ", ""),
+            ("The ", ""),
+            ("Pious ", ""),
+            ("Holy ", ""),
+            ("Fathers", "Frs."),
+            ("Father", "Fr."),
+            ("St", "St."),
+            ("Saint", "St."),
+            ("Mother", "Mthr."),
+            ("The Twenty Thousand Martyrs burned to death in their church in Nicomedia (ca. 304).",
+             "20,000 Burned Nicomedia Martyrs")
+        ]
+        
+        func replaceStrings(in text: String) -> String {
+            replacements.reduce(text) { result, pair in
+                result.replacingOccurrences(of: pair.0, with: pair.1)
             }
         }
+        
+        func truncateAtComma(_ text: String) -> String {
+            if text.contains("20,000") {
+                return text
+            }
+            if let range = text.range(of: ",") {
+                return String(text[..<range.lowerBound])
+            }
+            return text
+        }
+        
+        // Apply transformations
+        let processedTitle = replaceStrings(in: story.title)
+        return truncateAtComma(processedTitle)
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
