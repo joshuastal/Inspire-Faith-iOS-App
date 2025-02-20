@@ -9,7 +9,7 @@ import Foundation
 struct CalendarDay: Codable {
     let paschaDistance, julianDayNumber, year, month: Int
     let day, weekday, tone: Int
-    let titles: [String]
+    let titles: [String]?
     let summaryTitle: String
     let feastLevel: Int
     let feastLevelDescription: String

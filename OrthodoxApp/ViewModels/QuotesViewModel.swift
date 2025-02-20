@@ -4,17 +4,15 @@ import FirebaseFirestore
 
 @MainActor
 class QuotesViewModel: ObservableObject {
+    static let shared = QuotesViewModel() // Singleton instance
+    
     @Published var firestoreQuotes: [QuoteObject] = []
     @Published var localQuotes: [QuoteObject] = []
     
-    
-    
-    @Published private(set) var dailyQuote: QuoteObject?
+    @Published private(set) var dailyQuote: QuoteObject? // DAILY QUOTE CREATION
     private let defaults = UserDefaults.standard
     
-    
-    
-    @AppStorage("savedAllQuotes") private var savedAllQuotesData: Data = Data()
+    @AppStorage("savedAllQuotes") private var savedAllQuotesData: Data = Data() // ALLSAVEDQUOTES CREATION
     @Published var allQuotes: [QuoteObject] = [] {
         didSet {
             if let encoded = try? JSONEncoder().encode(allQuotes) {
@@ -23,7 +21,7 @@ class QuotesViewModel: ObservableObject {
         }
     }
     
-    @AppStorage("savedUnshuffledQuotes") private var savedUnshuffledQuotesData: Data = Data()
+    @AppStorage("savedUnshuffledQuotes") private var savedUnshuffledQuotesData: Data = Data() // SHUFFLED QUOTES CREATION
     @Published var unshuffledQuotes: [QuoteObject] = [] {
         didSet {
             if let encoded = try? JSONEncoder().encode(unshuffledQuotes) {
@@ -32,7 +30,7 @@ class QuotesViewModel: ObservableObject {
         }
     }
     
-    @AppStorage("savedFavorites") private var savedFavoritesData: Data = Data()
+    @AppStorage("savedFavorites") private var savedFavoritesData: Data = Data() // SAVEDFAVORITES CREATION
     @Published var favoriteQuotes: [QuoteObject] = [] {
         didSet {
             // When favoriteQuotes changes, encode and save to AppStorage
@@ -52,9 +50,6 @@ class QuotesViewModel: ObservableObject {
             allQuotes = decoded
         }
     }
-    
-        
-    
     
     func addToFavorites(quote: QuoteObject) {
         if !favoriteQuotes.contains(where: { $0.id == quote.id }) {
@@ -197,52 +192,107 @@ class QuotesViewModel: ObservableObject {
     ]
     
     
-    
-    
-    
-    
-    
     @AppStorage("currentQuoteIndex") private var currentQuoteIndex: Int = 0
     
-    func getDailyQuote(for date: Date = Date()) -> QuoteObject {
-        print("Getting quote for date: \(date)")
+    @AppStorage("notificationHour") var notificationHour: Int = 8
+    @AppStorage("notificationMinute") var notificationMinute: Int = 0
+    
+    // MARK: - Daily Quote Methods
+
+    /// Retrieves a new daily quote by incrementing the currentQuoteIndex,
+    /// updates the cache, and returns the quote.
+    func getDailyQuote() -> QuoteObject {
+        print("Getting daily quote for today")
         
-        let calendar = Calendar.current
-        let today = calendar.startOfDay(for: Date())
-        let targetDate = calendar.startOfDay(for: date)
-        
-        // Check if we need to increment the index for a new day
-        if let lastDate = defaults.object(forKey: "lastQuoteDate") as? Date {
-            let lastDateStart = calendar.startOfDay(for: lastDate)
-            if lastDateStart < today {
-                // It's a new day, increment the index
-                currentQuoteIndex = (currentQuoteIndex + 1) % unshuffledQuotes.count
-                print("New day detected - incrementing index to: \(currentQuoteIndex)")
-            }
+        guard !unshuffledQuotes.isEmpty else {
+            print("No quotes available. Returning test quote.")
+            return testQuote
         }
         
-        let daysFromToday = calendar.dateComponents([.day], from: today, to: targetDate).day ?? 0
-        let targetIndex = (currentQuoteIndex + daysFromToday) % unshuffledQuotes.count
+        currentQuoteIndex = (currentQuoteIndex + 1) % unshuffledQuotes.count
+        let quote = unshuffledQuotes[currentQuoteIndex]
         
-        let quote = unshuffledQuotes[targetIndex]
-        
-        // If it's today, update cache
-        if daysFromToday == 0 {
-            if let encoded = try? JSONEncoder().encode(quote) {
-                defaults.set(encoded, forKey: "dailyQuote")
-                defaults.set(date, forKey: "lastQuoteDate")
-            }
+        // Cache the new daily quote and the update time using a consistent key.
+        if let encoded = try? JSONEncoder().encode(quote) {
+            defaults.set(encoded, forKey: "dailyQuote")
+            defaults.set(Date(), forKey: "lastDailyQuoteDate")
         }
         
-        print("Returning quote for index \(targetIndex): \(quote.quote)")
+        print("Returning quote: \(quote.quote) for the day")
         return quote
     }
-    
-    
+
+    /// Updates the published dailyQuote property with a new daily quote.
     @MainActor
     func updateDailyQuote() {
-        dailyQuote = getDailyQuote()
+        guard !allQuotes.isEmpty else { return }
+
+        // Pick a random quote (or use your preferred logic)
+        let newQuote = allQuotes.randomElement() ?? testQuote
+        self.dailyQuote = newQuote
+
+        // Save to UserDefaults with a consistent key.
+        if let encoded = try? JSONEncoder().encode(newQuote) {
+            defaults.set(encoded, forKey: "dailyQuote")
+            defaults.set(Date(), forKey: "lastDailyQuoteDate")
+        }
     }
-    
+
+    /// Loads the saved daily quote or refreshes it if needed based on a time check.
+    func loadDailyQuote() {
+        // Load using the consistent key.
+        let lastUpdateDate = defaults.object(forKey: "lastDailyQuoteDate") as? Date ?? .distantPast
+        let currentTime = Date()
+        
+        // Calculate today’s scheduled refresh time based on notificationHour and notificationMinute.
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone.current
+        if let scheduledRefreshTime = calendar.date(bySettingHour: notificationHour,
+                                                    minute: notificationMinute,
+                                                    second: 0,
+                                                    of: currentTime) {
+            // If it's after the scheduled refresh time and the last update happened before it, refresh.
+            if currentTime >= scheduledRefreshTime && lastUpdateDate < scheduledRefreshTime {
+                print("Scheduled refresh time reached. Updating daily quote.")
+                updateDailyQuote()
+            } else {
+                print("Scheduled refresh time not reached or already updated. Loading saved quote.")
+                if let savedQuoteData = defaults.data(forKey: "dailyQuote"),
+                   let savedQuote = try? JSONDecoder().decode(QuoteObject.self, from: savedQuoteData) {
+                    self.dailyQuote = savedQuote
+                }
+            }
+        } else {
+            print("Failed to calculate scheduled refresh time.")
+        }
+    }
+
+    /// Checks and refreshes the daily quote if needed. This is intended to be called
+    /// when the app becomes active.
+    func checkAndRefreshDailyQuoteIfNeeded() {
+        let now = Date()
+        let lastUpdateDate = defaults.object(forKey: "lastDailyQuoteDate") as? Date ?? .distantPast
+        
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone.current
+        
+        // Calculate today's scheduled refresh time.
+        if let scheduledRefreshTime = calendar.date(bySettingHour: notificationHour,
+                                                    minute: notificationMinute,
+                                                    second: 0,
+                                                    of: now) {
+            // Only update if now is after the scheduled time and the last update occurred before that time.
+            if now >= scheduledRefreshTime && lastUpdateDate < scheduledRefreshTime {
+                print("Scheduled refresh time reached. Updating daily quote.")
+                updateDailyQuote()
+            } else {
+                print("Daily quote is still valid. No refresh needed.")
+            }
+        } else {
+            print("Failed to calculate scheduled refresh time.")
+        }
+    }
+
+
 }
 

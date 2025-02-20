@@ -57,27 +57,11 @@ func scheduleNotification(viewModel: QuotesViewModel) {
     
     let content = UNMutableNotificationContent()
     
-    // Calculate if the specified time is still to come today
-    let calendar = Calendar.current
-    let now = Date()
+    // Get the updated daily quote (it is already refreshed by the background task)
+    let dailyQuote = viewModel.dailyQuote ?? viewModel.getDailyQuote()
     
-    var components = DateComponents()
-    components.hour = hour
-    components.minute = minute
-    
-    guard let targetTime = calendar.nextDate(after: now,
-                                           matching: components,
-                                           matchingPolicy: .nextTime) else {
-        print("Could not calculate next notification date")
-        return
-    }
-    
-    // Get the quote for the target date
-    let dailyQuote = viewModel.getDailyQuote(for: targetTime)
-    
-    content.title = "Daily Quote"
-    content.body = "\"\(dailyQuote.quote)\""
-    content.subtitle = "— \(dailyQuote.author)"
+    content.title = "Daily Quote Reminder"
+    content.body = "Your daily quote is ready!"
     content.sound = UNNotificationSound.default
     
     // Create trigger components for the notification
@@ -85,9 +69,10 @@ func scheduleNotification(viewModel: QuotesViewModel) {
     dateComponents.hour = hour
     dateComponents.minute = minute
     
+    // Trigger the notification every 24 hours
     let trigger = UNCalendarNotificationTrigger(
         dateMatching: dateComponents,
-        repeats: true
+        repeats: true // This ensures the notification repeats every 24 hours
     )
     
     let request = UNNotificationRequest(
@@ -103,14 +88,17 @@ func scheduleNotification(viewModel: QuotesViewModel) {
     
     // Schedule the new notification
     UNUserNotificationCenter.current().add(request)
-    print("Notification scheduled for \(targetTime) with quote: \(dailyQuote.quote)")
+    print("Notification scheduled for \(dailyQuote.quote) at \(hour):\(minute)")
 }
 
 func rescheduleNotifications(viewModel: QuotesViewModel) {
     UNUserNotificationCenter.current().getNotificationSettings { settings in
         DispatchQueue.main.async {
             if settings.authorizationStatus == .authorized {
+                // Schedule notification immediately after the background task completes or app launch
                 scheduleNotification(viewModel: viewModel)
+            } else {
+                print("Notification permissions not granted")
             }
         }
     }

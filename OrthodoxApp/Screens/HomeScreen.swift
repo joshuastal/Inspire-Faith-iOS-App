@@ -1,10 +1,3 @@
-//
-//  HomeScreen.swift
-//  OrthodoxApp
-//
-//  Created by Joshua Stalinger on 12/25/24.
-//
-
 import SwiftUI
 import UserNotifications
 import FirebaseCore
@@ -14,56 +7,9 @@ struct HomeScreen: View {
     let db = Firestore.firestore()
     @ObservedObject var quotesViewModel: QuotesViewModel
     @ObservedObject var orthocalViewModel: OrthocalViewModel  // Add this for calendar data
-    //@State private var isNotificationsDenied = false
+    @State private var isNotificationsDenied = false
     
-    var fastLevel: String? {
-        orthocalViewModel.calendarDay?.fastExceptionDesc
-    }
-    
-    
-    var FastExceptions = [
-        "",
-        "Wine and Oil are Allowed",
-        "Fish, Wine and Oil are Allowed",
-        "Wine and Oil are Allowed",
-        "Fish, Wine and Oil are Allowed",
-        "Wine is Allowed",
-        "Wine, Oil and Caviar are Allowed",
-        "Meat Fast",
-        "Strict Fast (Wine and Oil)",
-        "Strict Fast",
-        "No overrides",
-        "Fast Free",
-    ]
-    
-    
-    // Add a computed property for the title logic
-    var fastTitle: String {
-        guard let level = fastLevel else { return "" }
         
-        // Multiple conditions with a switch
-        switch level {
-        case "", "Fast Free":
-            return "🍽️"
-        case
-            "Wine and Oil are Allowed", "Wine is Allowed", "Strict Fast (Wine and Oil)":
-            return "🍷 🫒"
-        case
-            "Fish, Wine and Oil are Allowed", "Wine, Oil and Caviar are Allowed":
-            return "🐟 🍷 🫒"
-        case "Meat Fast":
-            return "🧀 🐟 🍷 🫒"
-        case
-            "Fast", "No overrides":
-            return "🥬 🥕 🍎"
-        case
-            "Strict Fast":
-            return "🚫"
-        default:
-            return "Fast \(level)"
-        }
-    }
-    
     var body: some View {
         NavigationView {
             ScrollView {
@@ -73,13 +19,13 @@ struct HomeScreen: View {
                         
                         // Fasting Block
                         if orthocalViewModel.calendarDay != nil {
+                            let fastDetector = FastLevelDetector(orthocalViewModel: orthocalViewModel)
                             HomePill(
                                 iconName: "fork.knife",
-                                content: "Fast: \(fastTitle)"
+                                content: "Fast: \(fastDetector.fastTitle)"
                             )
                             .padding(.leading, 8)
                         }
-                        
                         // Tone Block
                         if let tone = orthocalViewModel.calendarDay?.tone {
                             HomePill (
@@ -117,13 +63,12 @@ struct HomeScreen: View {
                 }
             }
             .task {
+                checkNotificationStatusAndSchedule(
+                    isNotificationsDenied: $isNotificationsDenied,
+                    viewModel: quotesViewModel
+                )
                 
-                quotesViewModel.updateDailyQuote()
-                
-                //checkNotificationStatusAndSchedule(
-                //    isNotificationsDenied: $isNotificationsDenied,
-                //    viewModel: quotesViewModel
-                //)
+                //print("\(String(describing: quotesViewModel.loadDailyQuote()))")
                 
             }
             .scrollIndicators(.hidden)
@@ -134,16 +79,16 @@ struct HomeScreen: View {
                         .foregroundColor(.primary)
                 }
             }
-//            .alert("Notifications Disabled", isPresented: $isNotificationsDenied) {
-//                Button("Cancel", role: .cancel) { }
-//                Button("Open Settings") {
-//                    if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
-//                        UIApplication.shared.open(settingsURL)
-//                    }
-//                }
-//            } message: {
-//                Text("Please enable notifications in Settings to use this feature.")
-//            }
+            .alert("Notifications Disabled", isPresented: $isNotificationsDenied) {
+                Button("Cancel", role: .cancel) { }
+                Button("Open Settings") {
+                    if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(settingsURL)
+                    }
+                }
+            } message: {
+                Text("Please enable notifications in Settings to use this feature.")
+            }
         }
     }
     

@@ -21,6 +21,7 @@ struct DataButtonView: View {
                     .foregroundColor(.accentColor)
                 Text(title)
                     .font(.headline)
+                    .foregroundColor(.accentColor)
                 Spacer()
                 Image(systemName: "chevron.up")
                     .foregroundColor(.secondary)

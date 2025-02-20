@@ -43,6 +43,9 @@ struct DailyQuoteCardView: View {
                         .font(.custom("AvenirLTStd-Medium", size: quoteFontSize))
                         .lineSpacing(8)
                         .multilineTextAlignment(.leading)
+                        .onAppear {
+                            print("Current quote: \(viewModel.dailyQuote ?? viewModel.testQuote)")
+                        }
                 }
                 
                 // Author with styling
