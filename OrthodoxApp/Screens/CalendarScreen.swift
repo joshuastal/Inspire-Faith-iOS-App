@@ -2,6 +2,7 @@ import SwiftUI
 
 struct InfiniteCalendarScreen: View {
     @StateObject private var viewModel = CalendarViewModel()
+    @AppStorage("accentColor") private var accentColor: Color = .blue
     
     var body: some View {
         NavigationView {
@@ -15,9 +16,9 @@ struct InfiniteCalendarScreen: View {
                     }) {
                         Image(systemName: "chevron.left")
                             .font(.title)
-                            .foregroundColor(.blue)
+                            .foregroundColor(accentColor)
                             .frame(width: 44, height: 44)
-                            .background(Color.blue.opacity(0.1))
+                            .background(accentColor.opacity(0.1))
                             .clipShape(Circle())
                     }
                     
@@ -35,9 +36,9 @@ struct InfiniteCalendarScreen: View {
                     }) {
                         Image(systemName: "chevron.right")
                             .font(.title)
-                            .foregroundColor(.blue)
+                            .foregroundColor(accentColor)
                             .frame(width: 44, height: 44)
-                            .background(Color.blue.opacity(0.1))
+                            .background(accentColor.opacity(0.1))
                             .clipShape(Circle())
                     }
                 }
@@ -214,18 +215,18 @@ struct DayCell: View {
                     ZStack {
                         if isSelected {
                             Circle()
-                                .fill(Color.blue)
+                                .fill(Color.accentColor)
                                 .frame(width: 46, height: 46) // Larger circle
                         } else if isToday {
                             Circle()
-                                .stroke(Color.blue, lineWidth: 2) // Slightly thicker border
+                                .stroke(Color.accentColor, lineWidth: 2) // Slightly thicker border
                                 .frame(width: 46, height: 46) // Larger circle
                         }
                     }
                 )
                 .foregroundColor(
                     isSelected ? .white :
-                        isToday ? .blue :
+                        isToday ? .accentColor :
                         isCurrentMonth ? .primary : .secondary.opacity(0.5)
                 )
         }
