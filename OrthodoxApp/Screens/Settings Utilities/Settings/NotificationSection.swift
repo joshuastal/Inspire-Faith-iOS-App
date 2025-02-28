@@ -18,7 +18,7 @@ struct NotificationSection: View {
                 showingDatePicker = true
             }) {
                 HStack {
-                    Text("Daily Notification")
+                    Text("Time")
                         .foregroundStyle(Color(.label))
                     Spacer()
                     Text(notificationSettings.formattedTime)

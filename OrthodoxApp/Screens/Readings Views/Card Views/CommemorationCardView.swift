@@ -14,6 +14,7 @@ struct CommemorationCardView: View {
     
     private var formattedStoryTitle: String {
         let replacements: [(String, String)] = [
+            ("First (4th c.) and Second (9th c.) Findings of the Precious Head of St John the Baptist","1st & 2nd Findings of the Head of St John the Baptist"),
             ("Our ", ""),
             ("Venerable ", ""),
             ("Righteous ", ""),
@@ -25,8 +26,10 @@ struct CommemorationCardView: View {
             ("St", "St."),
             ("Saint", "St."),
             ("Mother", "Mthr."),
+            ("Thirty-four", "34"),
             ("The Twenty Thousand Martyrs burned to death in their church in Nicomedia (ca. 304).",
              "20,000 Burned Nicomedia Martyrs")
+            
         ]
         
         func replaceStrings(in text: String) -> String {

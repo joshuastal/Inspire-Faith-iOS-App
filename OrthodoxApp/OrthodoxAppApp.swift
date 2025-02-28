@@ -41,7 +41,7 @@ struct OrthodoxAppApp: App {
                 }
             }
             .animation(.easeInOut(duration: 0.5), value: appState) // Crossfade effect
-            .onChange(of: scenePhase) { newPhase in
+            .onChange(of: scenePhase) { _, newPhase in
                 if newPhase == .active {
                     quotesViewModel.checkAndRefreshDailyQuoteIfNeeded()
                 }

@@ -19,7 +19,7 @@ struct CalendarDay: Codable {
     let fastException: Int
     let fastExceptionDesc: String
     let saints: [String]?
-    let serviceNotes: JSONNull?
+    let serviceNotes: [String]?
     let abbreviatedReadingIndices: [Int]
     let readings: [Reading]
     let stories: [Story]

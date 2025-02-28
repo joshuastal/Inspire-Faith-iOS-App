@@ -20,6 +20,14 @@ struct ContentView: View {
                 }
                 .tag(2)
             
+            InfiniteCalendarScreen()
+                .tabItem {
+                    Image(systemName: "calendar")
+                        .symbolRenderingMode(.monochrome)
+                    Text("Calendar")
+                }
+                .tag(5)
+            
             HomeScreen(
                 quotesViewModel: quotesViewModel,
                 orthocalViewModel: orthocalViewModel
@@ -30,6 +38,14 @@ struct ContentView: View {
                 Text("Home")
             }
             .tag(1)
+            
+            PrayersScreen()
+                .tabItem {
+                    Image(systemName: "hands.and.sparkles.fill")
+                        .symbolRenderingMode(.monochrome)
+                    Text("Prayers")
+                }
+                .tag(4)
             
             ReadingsScreen()
                 .tabItem {
