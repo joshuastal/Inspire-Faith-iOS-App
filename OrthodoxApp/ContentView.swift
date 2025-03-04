@@ -20,7 +20,7 @@ struct ContentView: View {
                 }
                 .tag(2)
             
-            InfiniteCalendarScreen()
+            InfiniteCalendarScreen(orthocalViewModel: orthocalViewModel)
                 .tabItem {
                     Image(systemName: "calendar")
                         .symbolRenderingMode(.monochrome)

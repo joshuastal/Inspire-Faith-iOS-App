@@ -19,13 +19,14 @@ struct HomeScreen: View {
                         
                         // Fasting Block
                         if orthocalViewModel.calendarDay != nil {
-                            let fastDetector = FastLevelDetector(orthocalViewModel: orthocalViewModel)
+                            let fastDetector = FastLevelDetector(orthocalViewModel: orthocalViewModel, specificCalendarDay: orthocalViewModel.calendarDay)
                             HomePill(
                                 iconName: "fork.knife",
                                 content: "Fast: \(fastDetector.fastTitle)"
                             )
                             .padding(.leading, 8)
                         }
+                        
                         // Tone Block
                         if let tone = orthocalViewModel.calendarDay?.tone {
                             HomePill (

@@ -8,8 +8,8 @@ import Foundation
 import SwiftUI
 
 struct FastLevelDetector {
-    
     @ObservedObject var orthocalViewModel: OrthocalViewModel
+    var specificCalendarDay: CalendarDay? // Use CalendarDay type
 
     enum FastLevels: Int {
         case NoFast = 0
@@ -20,72 +20,75 @@ struct FastLevelDetector {
         case NativityFast = 5
     }
 
+    // Use the passed calendar day if available, otherwise fall back to the default
+    private var calendarDayToUse: CalendarDay? {
+        return specificCalendarDay ?? orthocalViewModel.calendarDay
+    }
     
     var fastLevel: String? {
-            orthocalViewModel.calendarDay?.fastExceptionDesc
-        }
+        calendarDayToUse?.fastExceptionDesc
+    }
+    
+    var fastTitle: String {
+        guard let level = fastLevel else { return "" }
         
-        var fastTitle: String {
-            guard let level = fastLevel else { return "" }
-            
-            switch level {
-            case "":
-                // When there's no exception, check the base fast level
-                if let baseLevel = orthocalViewModel.calendarDay?.fastLevel {
-                    switch baseLevel {
-                    case FastLevels.NoFast.rawValue:
-                        return "🍽️"
-                    case FastLevels.Fast.rawValue,
-                         FastLevels.LentenFast.rawValue,
-                         FastLevels.ApostlesFast.rawValue,
-                         FastLevels.DormitionFast.rawValue,
-                         FastLevels.NativityFast.rawValue:
-                        return "🥬 🥕 🍎"
-                    default:
-                        return "🥬 🥕 🍎"  // Default to standard fast
-                    }
+        switch level {
+        case "":
+            // When there's no exception, check the base fast level
+            if let baseLevel = calendarDayToUse?.fastLevel {
+                switch baseLevel {
+                case FastLevels.NoFast.rawValue:
+                    return "🍽️"
+                case FastLevels.Fast.rawValue,
+                     FastLevels.LentenFast.rawValue,
+                     FastLevels.ApostlesFast.rawValue,
+                     FastLevels.DormitionFast.rawValue,
+                     FastLevels.NativityFast.rawValue:
+                    return "🥬 🥕 🍎"
+                default:
+                    return "🥬 🥕 🍎"  // Default to standard fast
                 }
-                return "🍽️"
-                
-            case "Fast Free":
-                return "🍽️"
-                
-            case "Wine and Oil are Allowed",
-                 "Wine is Allowed",
-                 "Strict Fast (Wine and Oil)":
-                return "🍷 🫒"
-                
-            case "Fish, Wine and Oil are Allowed",
-                 "Wine, Oil and Caviar are Allowed":
-                return "🐟 🍷 🫒"
-                
-            case "Meat Fast":
-                return "🧀 🐟 🍷 🫒"
-                
-            case "Fast", "No overrides":
-                // For "No overrides", we should check the base fast level
-                if let baseLevel = orthocalViewModel.calendarDay?.fastLevel {
-                    switch baseLevel {
-                    case FastLevels.NoFast.rawValue:
-                        return "🍽️"
-                    case FastLevels.Fast.rawValue,
-                         FastLevels.LentenFast.rawValue,
-                         FastLevels.ApostlesFast.rawValue,
-                         FastLevels.DormitionFast.rawValue,
-                         FastLevels.NativityFast.rawValue:
-                        return "🥬 🥕 🍎"
-                    default:
-                        return "🥬 🥕 🍎"  // Default to standard fast
-                    }
-                }
-                return "🥬 🥕 🍎"
-                
-            case "Strict Fast":
-                return "🚫"
-                
-            default:
-                return "Fast \(level)"
             }
+            return "🍽️"
+            
+        case "Fast Free":
+            return "🍽️"
+            
+        case "Wine and Oil are Allowed",
+             "Wine is Allowed",
+             "Strict Fast (Wine and Oil)":
+            return "🍷 🫒"
+            
+        case "Fish, Wine and Oil are Allowed",
+             "Wine, Oil and Caviar are Allowed":
+            return "🐟 🍷 🫒"
+            
+        case "Meat Fast":
+            return "🧀 🐟 🍷 🫒"
+            
+        case "Fast", "No overrides":
+            // For "No overrides", we should check the base fast level
+            if let baseLevel = calendarDayToUse?.fastLevel {
+                switch baseLevel {
+                case FastLevels.NoFast.rawValue:
+                    return "🍽️"
+                case FastLevels.Fast.rawValue,
+                     FastLevels.LentenFast.rawValue,
+                     FastLevels.ApostlesFast.rawValue,
+                     FastLevels.DormitionFast.rawValue,
+                     FastLevels.NativityFast.rawValue:
+                    return "🥬 🥕 🍎"
+                default:
+                    return "🥬 🥕 🍎"  // Default to standard fast
+                }
+            }
+            return "🥬 🥕 🍎"
+            
+        case "Strict Fast":
+            return "🚫"
+            
+        default:
+            return "Fast \(level)"
         }
-
+    }
 }

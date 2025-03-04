@@ -15,6 +15,7 @@ struct HomePill: View {
     var scalesText: Bool = false
     var lineLimit: Int = 2
     var maxWidth: CGFloat? = nil  // Add optional max width parameter
+    @AppStorage("accentColor") private var accentColor: Color = .blue
 
     
     var body: some View {
@@ -22,7 +23,7 @@ struct HomePill: View {
             Image(systemName: iconName)
                 .font(.title2)
                 .frame(width: 24, height: 24)  // Force consistent icon frame
-                .foregroundColor(.accentColor)
+                .foregroundColor(accentColor)
                 .offset(x: iconOffset?.x ?? 0, y: iconOffset?.y ?? 0)
             
             Text(content)
