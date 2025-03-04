@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HomePill: View {
+struct DefaultContentPill: View {
     let iconName: String
     let content: String
     var iconOffset: CGPoint? = nil
@@ -30,6 +30,7 @@ struct HomePill: View {
                 .font(.headline)
                 .modifier(ScalingTextModifier(scales: scalesText, lineLimit: lineLimit))
                 .offset(x: textOffset?.x ?? 0, y: textOffset?.y ?? 0)  // Apply text offset
+            
         }
         .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
         .frame(maxWidth: maxWidth ?? .infinity) // Use maxWidth if provided
@@ -59,28 +60,4 @@ struct ScalingTextModifier: ViewModifier {
             content
         }
     }
-}
-
-#Preview {
-    VStack {
-        HomePill(
-            iconName: "testtube.2", content: "Test"
-        )
-        HomePill(
-            iconName: "testtube.2", content: "Test 2"
-        )
-        
-        HStack {
-            
-            HomePill(
-                iconName: "testtube.2", content: "Test 3"
-            )
-            
-            HomePill(
-                iconName: "testtube.2", content: "Test 4"
-            )
-            
-        }
-    }
-    
 }

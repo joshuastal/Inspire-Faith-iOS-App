@@ -8,7 +8,7 @@ struct CustomDateDetailView: View {
 
     private var formattedDate: String {
         let formatter = DateFormatter()
-        formatter.dateStyle = .full
+        formatter.dateStyle = .long
         return formatter.string(from: date)
     }
     
@@ -27,64 +27,73 @@ struct CustomDateDetailView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            
             // Header with close button - more compact
-            HStack {
-                Spacer()
-                
-                Button {
-                    withAnimation(.spring()) {
-                        isPresented = false
-                    }
-                } label: {
-                    Image(systemName: "xmark")
-                        .foregroundColor(Color(.label))
-                        .imageScale(.large)
-                        .frame(width: 44, height: 44)
-                }
+            ZStack {
+                        // Centered text
+                        Text(formattedDate)
+                            .foregroundColor(Color(.label))
+                            .font(.title2.bold())
+                            .frame(maxWidth: .infinity)
+                        
+                        // Right-aligned close button
+                        HStack {
+                            Spacer()
+                            Button {
+                                withAnimation(.spring()) {
+                                    isPresented = false
+                                }
+                            } label: {
+                                Image(systemName: "xmark")
+                                    .foregroundColor(Color(.label))
+                                    .imageScale(.large)
+                                    .frame(width: 44, height: 44)
+                            }
+                        }
             }
             .padding(.top, 8)
             .padding(.trailing, 8)
             
             ScrollView {
-                VStack(spacing: 25) {
-                    // Date display with title
-                    VStack(spacing: 5) {
-                        Text(formattedDate)
-                            .font(.title2.bold())
-                    }
-                    .padding(.top, 5)
-                    
+                VStack(spacing: 20) {
+                                        
                     // Fasting Block
                     if viewModel.chosenCalendarDay != nil {
                         let fastDetector = FastLevelDetector(orthocalViewModel: viewModel, specificCalendarDay: viewModel.chosenCalendarDay)
-                        HomePill(
+                        DefaultContentPill(
                             iconName: "fork.knife",
                             content: "Fast: \(fastDetector.fastTitle)"
                         )
+                        .padding(.top, 3)
+                        .frame(maxWidth: .infinity) // Make it fill available width
                     }
                     
                     // Tone Block
                     if let tone = viewModel.chosenCalendarDay?.tone {
-                        HomePill (
+                        DefaultContentPill(
                             iconName: "music.note",
                             content: "Tone: \(tone)",
                             iconOffset: CGPoint(x: -5, y: 0),
-                            textOffset: CGPoint(x: -6, y: 0),
-                            maxWidth: 150
+                            textOffset: CGPoint(x: -6, y: 0)
+                            // Remove maxWidth parameter to allow full width
                         )
+                        .frame(maxWidth: .infinity) // Make it fill available width
                     }
                     
                     // Feast Block
                     if let feasts = viewModel.chosenCalendarDay?.feasts, !feasts.isEmpty {
-                        HomePill(
+                        DefaultContentPill(
                             iconName: "party.popper",
                             content: "Feasts: \(feasts.joined(separator: ", \n"))",
                             scalesText: true
                         )
+                        .frame(maxWidth: .infinity) // Make it fill available width
                     }
+                    
+                
+                    
+                    
                 }
-                .padding(.horizontal, 8)
+                .padding(.horizontal, 16) // Slightly larger horizontal padding
             }
         }
         .task {

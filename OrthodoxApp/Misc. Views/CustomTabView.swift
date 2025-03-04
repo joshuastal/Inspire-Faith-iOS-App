@@ -33,6 +33,7 @@ struct TabButton: View {
     let isSelected: Bool
     var animation: Namespace.ID
     let action: () -> Void
+    @AppStorage("accentColor") private var accentColor: Color = .blue
     
     var body: some View {
         Button(action: action) {
@@ -43,11 +44,11 @@ struct TabButton: View {
                 .background {
                     if isSelected {
                         RoundedRectangle(cornerRadius: 12)
-                            .fill(Color.accentColor.opacity(0.15))
+                            .fill(accentColor.opacity(0.15))
                             .matchedGeometryEffect(id: "TAB", in: animation)
                     }
                 }
-                .foregroundColor(isSelected ? .accentColor : .secondary)
+                .foregroundColor(isSelected ? accentColor : .secondary)
                 .scaleEffect(isSelected ? 1.02 : 1)
         }
         .buttonStyle(.plain)

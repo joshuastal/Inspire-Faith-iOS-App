@@ -20,7 +20,7 @@ struct HomeScreen: View {
                         // Fasting Block
                         if orthocalViewModel.calendarDay != nil {
                             let fastDetector = FastLevelDetector(orthocalViewModel: orthocalViewModel, specificCalendarDay: orthocalViewModel.calendarDay)
-                            HomePill(
+                            DefaultContentPill(
                                 iconName: "fork.knife",
                                 content: "Fast: \(fastDetector.fastTitle)"
                             )
@@ -29,7 +29,7 @@ struct HomeScreen: View {
                         
                         // Tone Block
                         if let tone = orthocalViewModel.calendarDay?.tone {
-                            HomePill (
+                            DefaultContentPill (
                                 iconName: "music.note",
                                 content: "Tone: \(tone)",
                                 iconOffset: CGPoint(x: -5, y: 0),
@@ -42,7 +42,7 @@ struct HomeScreen: View {
                     
                     // Feast Block
                     if let feasts = orthocalViewModel.calendarDay?.feasts, !feasts.isEmpty {
-                        HomePill(
+                        DefaultContentPill(
                             iconName: "party.popper",
                             content: "Feasts: \(feasts.joined(separator: ", \n"))",
                             //iconOffset: CGPoint(x: -10, y: 0),
