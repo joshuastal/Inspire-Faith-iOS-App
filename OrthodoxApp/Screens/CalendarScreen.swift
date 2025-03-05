@@ -1,99 +1,92 @@
 import SwiftUI
+import ElegantCalendar
 
-struct InfiniteCalendarScreen: View {
-    @StateObject private var viewModel = CalendarViewModel()
-    @ObservedObject var orthocalViewModel: OrthocalViewModel
+struct CalendarScreen: View {
+    @StateObject var calendarManager: ElegantCalendarManager
     @AppStorage("accentColor") private var accentColor: Color = .blue
+    @ObservedObject var orthocalViewModel: OrthocalViewModel
     
+    var theme: CalendarTheme {
+        CalendarTheme(primary: accentColor)
+    }
+    
+    init(orthocalViewModel: OrthocalViewModel) {
+        self._orthocalViewModel = ObservedObject(wrappedValue: orthocalViewModel)
+        
+        // Keep the 12-month range for good performance
+        let startDate = Calendar.current.date(byAdding: .month, value: -12, to: Date()) ?? Date()
+        let endDate = Calendar.current.date(byAdding: .month, value: 12, to: Date()) ?? Date()
+        
+        // Create the configuration
+        let configuration = CalendarConfiguration(
+            startDate: startDate,
+            endDate: endDate
+        )
+        
+        // Initialize the calendar manager with configuration AND initialMonth
+        _calendarManager = StateObject(wrappedValue: {
+            let manager = ElegantCalendarManager(
+                configuration: configuration,
+                initialMonth: Date() // This sets the calendar to start at today's month
+            )
+            return manager
+        }())
+    }
+
     var body: some View {
-        NavigationView {
-            VStack(spacing: 0) {
-                // Month year display with controls
-                HStack {
-                    Button(action: {
-                        viewModel.moveToPreviousMonth()
-                        // Explicitly tell SwiftUI that tab view selection should update too
-                        viewModel.synchronizeTabView = true
-                    }) {
-                        Image(systemName: "chevron.left")
-                            .font(.title)
-                            .foregroundColor(accentColor)
-                            .frame(width: 44, height: 44)
-                            .background(accentColor.opacity(0.1))
-                            .clipShape(Circle())
-                    }
-                    
-                    Spacer()
-                    
-                    Text(viewModel.currentMonth.formatted(format: "MMMM yyyy"))
-                        .font(.title.bold())
-                    
-                    Spacer()
-                    
-                    Button(action: {
-                        viewModel.moveToNextMonth()
-                        // Explicitly tell SwiftUI that tab view selection should update too
-                        viewModel.synchronizeTabView = true
-                    }) {
-                        Image(systemName: "chevron.right")
-                            .font(.title)
-                            .foregroundColor(accentColor)
-                            .frame(width: 44, height: 44)
-                            .background(accentColor.opacity(0.1))
-                            .clipShape(Circle())
-                    }
-                }
-                .padding(.horizontal)
-                .padding(.vertical, 10)
-                .background(Color(.systemBackground))
-                
-                Divider()
-                
-                // Days of the week header
-                WeekdayHeaderView()
-                    .background(Color(.systemBackground))
-                
-                Divider()
-                
-                // Infinite scrolling calendar
-                TabView(selection: $viewModel.currentMonth) {
-                    ForEach(-24...24, id: \.self) { monthOffset in
-                        if let currentDate = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Date())),
-                           let monthDate = Calendar.current.date(byAdding: .month, value: monthOffset, to: currentDate) {
-                            MonthView(
-                                month: monthDate,
-                                selectedDate: $viewModel.selectedDate,
-                                showingDateDetails: $viewModel.showingDateDetails
-                            )
-                            .tag(monthDate)
-                            .id("month_view_\(monthDate.formatted(format: "yyyy-MM"))")
-                        }
-                    }
-                }
-                .tabViewStyle(.page(indexDisplayMode: .never))
-                .frame(maxHeight: .infinity) // Take up all available space
-                .onChange(of: viewModel.currentMonth) { _, newMonth in
-                    // This prevents a potential infinite update loop while still ensuring
-                    // updates happen when we need them
-                    if viewModel.synchronizeTabView {
-                        viewModel.synchronizeTabView = false
-                    }
-                }
-                .onAppear {
-                    // Ensure we're starting at the correct current month
-                    viewModel.resetToCurrentMonth()
-                }
+        ElegantCalendarView(calendarManager: calendarManager)
+            .theme(theme)
+//            .vertical() // uncomment for horizontal scrolling
+            .onAppear {
+                // Set both delegate and datasource
+                calendarManager.delegate = self
+                calendarManager.datasource = self
             }
-            .navigationTitle("🗓️ Calendar")
-        }
-        .overlayPopup(isPresented: $viewModel.showingDateDetails) {
-            if let selectedDate = viewModel.selectedDate {
-                CustomDateDetailView(date: selectedDate, isPresented: $viewModel.showingDateDetails, viewModel: orthocalViewModel)
-            } else {
-                // Fallback if no date is selected (shouldn't happen)
-                Text("No date selected")
-                    .padding()
+    }
+}
+
+// MARK: - Calendar Delegate implementation
+extension CalendarScreen: ElegantCalendarDelegate {
+    func calendar(didSelectDay date: Date) {
+        let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
+        
+        if let year = components.year, let month = components.month, let day = components.day {
+            print("Selected date: \(year)/\(month)/\(day)")
+            Task {
+                await orthocalViewModel.loadChosenCalendarDay(year: year, month: month, day: day)
             }
         }
+    }
+    
+    func calendar(willDisplayMonth date: Date) {
+        // Required by protocol but we don't need to implement anything
+    }
+}
+
+// MARK: - Calendar DataSource implementation
+extension CalendarScreen: ElegantCalendarDataSource {
+    func calendar(viewForSelectedDate date: Date, dimensions size: CGSize) -> AnyView {
+        print("Creating view for selected date: \(date) with size: \(size)")
+        return AnyView(
+            CalendarDataListView(date: date, height: size.height)
+        )
+    }
+    
+    func calendar(backgroundColorOpacityForDate date: Date) -> Double {
+            // Calculate the same number of items that the view would show
+            let day = Calendar.current.component(.day, from: date)
+            let month = Calendar.current.component(.month, from: date)
+            let numberOfItems = (day + month) % 10 + 1
+            
+            // Make the opacity directly proportional to the number of items
+            // Scale between 0.1 (minimum) and 0.8 (maximum)
+            let opacity = 0.1 + (Double(numberOfItems) / 10.0) * 0.7
+            
+            return opacity
+        }
+        
+    
+    func calendar(canSelectDate date: Date) -> Bool {
+        return true
     }
 }

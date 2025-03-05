@@ -1,5 +1,5 @@
 {
-  "originHash" : "c63c63846d9c539229e96de38d6af51417e28c0ee9a0bc48bd0f0f19d923c329",
+  "originHash" : "0e1030595fa0e62071dba83dd1bf54f773aed11e158680dac5a0fb789dc0ac97",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -17,6 +17,24 @@
       "state" : {
         "revision" : "61b85103a1aeed8218f17c794687781505fbbef5",
         "version" : "11.2.0"
+      }
+    },
+    {
+      "identity" : "elegantcalendar",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ThasianX/ElegantCalendar",
+      "state" : {
+        "revision" : "d446234f27e60f5bef15f91c35d384f388ff2c7d",
+        "version" : "4.3.2"
+      }
+    },
+    {
+      "identity" : "elegantpages",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ThasianX/ElegantPages",
+      "state" : {
+        "revision" : "d598ce4824c40296decc84eae5b3c042d3dff842",
+        "version" : "1.4.2"
       }
     },
     {

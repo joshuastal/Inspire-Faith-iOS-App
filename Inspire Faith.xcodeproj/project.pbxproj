@@ -26,6 +26,7 @@
 		42878A202D1618A600F0F5C8 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 42878A1F2D1618A600F0F5C8 /* FirebaseRemoteConfig */; };
 		42878A242D1618A600F0F5C8 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 42878A232D1618A600F0F5C8 /* FirebaseStorageCombine-Community */; };
 		42878A262D1618A600F0F5C8 /* FirebaseVertexAI in Frameworks */ = {isa = PBXBuildFile; productRef = 42878A252D1618A600F0F5C8 /* FirebaseVertexAI */; };
+		428A8F192D779E7E0083832F /* ElegantCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 428A8F182D779E7E0083832F /* ElegantCalendar */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +101,7 @@
 				42878A0E2D1618A500F0F5C8 /* FirebaseFirestore in Frameworks */,
 				42878A182D1618A600F0F5C8 /* FirebaseInstallations in Frameworks */,
 				42878A142D1618A600F0F5C8 /* FirebaseFunctionsCombine-Community in Frameworks */,
+				428A8F192D779E7E0083832F /* ElegantCalendar in Frameworks */,
 				428789FF2D16170500F0F5C8 /* FirebaseAppDistribution-Beta in Frameworks */,
 				428789FB2D16170500F0F5C8 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				42878A042D1618A500F0F5C8 /* FirebaseAuthCombine-Community in Frameworks */,
@@ -185,6 +187,7 @@
 				42878A1F2D1618A600F0F5C8 /* FirebaseRemoteConfig */,
 				42878A232D1618A600F0F5C8 /* FirebaseStorageCombine-Community */,
 				42878A252D1618A600F0F5C8 /* FirebaseVertexAI */,
+				428A8F182D779E7E0083832F /* ElegantCalendar */,
 			);
 			productName = OrthodoxApp;
 			productReference = 423A187F2D14DE5600DF3A95 /* Inspire Faith.app */;
@@ -270,6 +273,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				428789F52D16170500F0F5C8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				428A8F172D779E7E0083832F /* XCRemoteSwiftPackageReference "ElegantCalendar" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 423A18802D14DE5600DF3A95 /* Products */;
@@ -472,7 +476,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = OrthodoxApp/OrthodoxApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"OrthodoxApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 97GJMP82X9;
 				ENABLE_PREVIEWS = YES;
@@ -488,7 +492,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.10.1;
+				MARKETING_VERSION = 1.20;
 				PRODUCT_BUNDLE_IDENTIFIER = joshuastal.OrthodoxApp;
 				PRODUCT_NAME = "Inspire Faith";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -507,7 +511,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = OrthodoxApp/OrthodoxApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"OrthodoxApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 97GJMP82X9;
 				ENABLE_PREVIEWS = YES;
@@ -523,7 +527,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.10.1;
+				MARKETING_VERSION = 1.20;
 				PRODUCT_BUNDLE_IDENTIFIER = joshuastal.OrthodoxApp;
 				PRODUCT_NAME = "Inspire Faith";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -656,6 +660,14 @@
 				minimumVersion = 11.6.0;
 			};
 		};
+		428A8F172D779E7E0083832F /* XCRemoteSwiftPackageReference "ElegantCalendar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ThasianX/ElegantCalendar";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.3.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -753,6 +765,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 428789F52D16170500F0F5C8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseVertexAI;
+		};
+		428A8F182D779E7E0083832F /* ElegantCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 428A8F172D779E7E0083832F /* XCRemoteSwiftPackageReference "ElegantCalendar" */;
+			productName = ElegantCalendar;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

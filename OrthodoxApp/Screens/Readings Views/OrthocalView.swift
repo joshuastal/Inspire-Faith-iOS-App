@@ -9,7 +9,21 @@ extension OrthocalViewModel {
         }
     }
     
-    var otherReadings: Bool {
+    var hasEpistleReadings: Bool {
+        guard let calendarDay = calendarDay else { return false }
+        return calendarDay.readings.contains { reading in
+            reading.source.contains("Epistle")
+        }
+    }
+    
+    var hasGospelReadings: Bool {
+        guard let calendarDay = calendarDay else { return false }
+        return calendarDay.readings.contains { reading in
+            reading.source.contains("Gospel")
+        }
+    }
+    
+    var hasOtherReadings: Bool {
         guard let calendarDay = calendarDay else { return false }
         return calendarDay.readings.contains { reading in
             let source = reading.source.lowercased()
@@ -35,21 +49,26 @@ struct OrthocalView: View {
         ScrollView{
                 VStack(spacing: 16) {
                     // Daily Readings
-                    DataButtonView(
-                        iconName: "book.fill",
-                        title: "Daily Epistle Readings"
-                    ) {
-                        // First show the sheet with existing data
-                        showingEpistleReadings = true
+                    if viewModel.hasEpistleReadings {
+                        DataButtonView(
+                            iconName: "book.fill",
+                            title: "Daily Epistle Readings"
+                        ) {
+                            // First show the sheet with existing data
+                            showingEpistleReadings = true
+                        }
                     }
                     
-                    DataButtonView(
-                        iconName: "book.fill",
-                        title: "Daily Gospel Readings"
-                    ) {
-                        // First show the sheet with existing data
-                        showingGospelReadings = true
+                    if viewModel.hasGospelReadings {
+                        DataButtonView(
+                            iconName: "book.fill",
+                            title: "Daily Gospel Readings"
+                        ) {
+                            // First show the sheet with existing data
+                            showingGospelReadings = true
+                        }
                     }
+                    
                     
                     if viewModel.hasProphecyReadings {
                         DataButtonView(
@@ -60,7 +79,7 @@ struct OrthocalView: View {
                         }
                     }
                     
-                    if viewModel.otherReadings {
+                    if viewModel.hasOtherReadings {
                         DataButtonView(
                             iconName: "book.fill",
                             title: "Daily Miscellaneous Readings"
