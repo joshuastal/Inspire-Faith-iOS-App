@@ -6,6 +6,7 @@ class OrthocalViewModel: ObservableObject {
     @Published var chosenCalendarDay: CalendarDay?
     @Published var errorMessage: String?
     @Published var isLoading: Bool = false  // Add this line
+    
 
     // Load calendar day data from the API
     func loadCalendarDay() async {
