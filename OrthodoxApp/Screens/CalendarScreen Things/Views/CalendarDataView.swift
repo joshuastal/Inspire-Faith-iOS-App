@@ -8,27 +8,35 @@ import ElegantCalendar
 import SwiftUI
 
 struct CalendarDataView: View {
-    let calendarDay: CalendarDay
+    let content: String
+    let tagColor: Color
 
     var body: some View {
         HStack {
             // Colored tag
-            RoundedRectangle(cornerRadius: 8)
-                .fill(Color.orange)
-                .frame(width: 5, height: 30)
+            GeometryReader { geometry in
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(tagColor)
+                    .frame(width: 5, height: geometry.size.height)
+            }
+            .frame(width: 5)
 
             VStack(alignment: .leading) {
-                Text("\(calendarDay.fastLevelDesc)")
+                Text("\(content)")
                     .font(.system(size: 16))
             }
-            
+
             Spacer()
         }
         .padding(8)
-        .background(Color(UIColor.systemBackground))
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color(.systemGray6))
+                .strokeBorder(Color(.label).opacity(0.075), lineWidth: 2)
+        )
         .cornerRadius(8)
         .shadow(radius: 1)
-        //.padding(.horizontal)
+        .padding(.horizontal, 2)
         .padding(.vertical, 4)
     }
 }

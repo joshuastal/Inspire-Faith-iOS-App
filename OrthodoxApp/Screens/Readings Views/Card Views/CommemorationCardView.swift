@@ -12,52 +12,13 @@ struct CommemorationCardView: View {
     @AppStorage("readingFontSize") private var readingFontSize: Double = 19 // Add this line
 
     
-    private var formattedStoryTitle: String {
-        let replacements: [(String, String)] = [
-            ("First (4th c.) and Second (9th c.) Findings of the Precious Head of St John the Baptist","1st & 2nd Findings of the Head of St John the Baptist"),
-            ("Our ", ""),
-            ("Venerable ", ""),
-            ("Righteous ", ""),
-            ("The ", ""),
-            ("Pious ", ""),
-            ("Holy ", ""),
-            ("Fathers", "Frs."),
-            ("Father", "Fr."),
-            ("St", "St."),
-            ("Saint", "St."),
-            ("Mother", "Mthr."),
-            ("Thirty-four", "34"),
-            ("The Twenty Thousand Martyrs burned to death in their church in Nicomedia (ca. 304).",
-             "20,000 Burned Nicomedia Martyrs")
-            
-        ]
-        
-        func replaceStrings(in text: String) -> String {
-            replacements.reduce(text) { result, pair in
-                result.replacingOccurrences(of: pair.0, with: pair.1)
-            }
-        }
-        
-        func truncateAtComma(_ text: String) -> String {
-            if text.contains("20,000") {
-                return text
-            }
-            if let range = text.range(of: ",") {
-                return String(text[..<range.lowerBound])
-            }
-            return text
-        }
-        
-        // Apply transformations
-        let processedTitle = replaceStrings(in: story.title)
-        return truncateAtComma(processedTitle)
-    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            
+            let formattedTitle = CommemorationsTitleFixer.formatTitle(story.title)
+
             // Story header
-            Text(formattedStoryTitle)
+            Text(formattedTitle)
                 .font(.custom("AvenirLTStd-Black", size: readingFontSize + 0.5))
                 .lineLimit(1)
                 .minimumScaleFactor(0.5)

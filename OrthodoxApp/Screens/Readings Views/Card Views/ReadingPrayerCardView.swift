@@ -52,8 +52,3 @@ struct ReadingPrayerCardView: View {
         // End Card Outline
     }
 }
-
-#Preview {
-    let viewModel = QuotesViewModel()
-    ReadingPrayerCardView()
-}
