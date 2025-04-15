@@ -1,4 +1,3 @@
-import ElegantCalendar
 //
 //  CalendarDataView.swift
 //  Inspire Faith
@@ -24,6 +23,7 @@ struct CalendarDataView: View {
             VStack(alignment: .leading) {
                 Text("\(content)")
                     .font(.system(size: 16))
+                    .padding(.vertical, 2)
             }
 
             Spacer()

@@ -66,8 +66,11 @@ struct CalendarDataListView: View {
                 // SAINTS BLOCK
                 // Properly handle the optional saints array
                 if let saints = calendarDay.saints, !saints.isEmpty {
+                    // Format each saint name individually before joining
+                    let formattedSaints = saints.map { CommemorationsTitleFixer.formatTitle($0) }
+                    
                     CalendarDataView(
-                        content: "Saints: \(saints.joined(separator: "; "))",
+                        content: "Saints: \(formattedSaints.joined(separator: "; "))",
                         tagColor: Color("Calendar Data Block Colors/saintsBlockColor")
                     )
                 }

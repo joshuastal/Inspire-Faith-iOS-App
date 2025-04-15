@@ -10,7 +10,7 @@ import Foundation
 struct CommemorationsTitleFixer {
     // Static array of replacement strings
     private static let replacements: [(String, String)] = [
-        ("First (4th c.) and Second (9th c.) Findings of the Precious Head of St John the Baptist","1st & 2nd Findings of the Head of St John the Baptist"),
+        ("First (4th c.) and Second (9th c.) Findings of the Precious Head of St John the Baptist","1st & 2nd Findings of St John the Baptist's head"),
         ("Our ", ""),
         ("Venerable ", ""),
         ("Righteous ", ""),
