@@ -11,7 +11,7 @@ import SwiftUI
 struct PrayersScreen: View {
     // State variable to track selected tabs
     @State private var currentTab = 0
-    var tabs: [String] = ["Tab 1", "Tab 2", "Tab 3"]
+    var tabs: [String] = ["Daily", "Liturgical", "Misc."]
 
     var body: some View {
         NavigationView {
@@ -22,14 +22,13 @@ struct PrayersScreen: View {
                 
                 // Swipeable area: TabView that changes the selected tab when swiped
                 TabView(selection: $currentTab) {
-                    ForEach(tabs.indices, id: \.self) { index in
-                        VStack {
-                            // Replace this with your content for each tab
-                            Text("Content for \(tabs[index])")
-                                .padding()
-                        }
-                        .tag(index)
-                    }
+                    DailyPrayersView().tag(0)
+                    
+                    LiturgicalPrayersView().tag(1)
+                    
+                    MiscPrayersView().tag(2)
+                    
+                    
                 }
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                 .animation(.spring(response: 0.3, dampingFraction: 0.7), value: currentTab)

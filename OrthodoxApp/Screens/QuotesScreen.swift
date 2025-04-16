@@ -3,14 +3,14 @@ import SwiftUI
 struct QuotesScreen: View {
     @ObservedObject var viewModel: QuotesViewModel
     @State private var currentTab = 0
-    
+    var tabs: [String] = ["All", "Favorites"]
+
     var body: some View {
         VStack(spacing: 0) {
             // Custom tab indicator
-            CustomTabView(
+            PrayerTabView(
                 currentTab: $currentTab,
-                tab1: "All",
-                tab2: "Favorites"
+                tabs: tabs
             )
             .animation(.spring(response: 0.3, dampingFraction: 0.7), value: currentTab)
             
