@@ -12,6 +12,19 @@ struct ContentView: View {
     
     var body: some View {
         TabView(selection: $selection) {
+            
+            HomeScreen (
+                quotesViewModel: quotesViewModel,
+                orthocalViewModel: orthocalViewModel
+            )
+            .tabItem {
+                Image(systemName: "house")
+                    .symbolRenderingMode(.monochrome)
+                Text("Home")
+            }
+            .tag(1)
+
+            
             QuotesScreen(viewModel: quotesViewModel)
                 .tabItem {
                     Image(systemName: "quote.bubble")
@@ -28,24 +41,14 @@ struct ContentView: View {
                 }
                 .tag(5)
             
-            HomeScreen (
-                quotesViewModel: quotesViewModel,
-                orthocalViewModel: orthocalViewModel
-            )
-            .tabItem {
-                Image(systemName: "house")
-                    .symbolRenderingMode(.monochrome)
-                Text("Home")
-            }
-            .tag(1)
-            
-            PrayersScreen()
-                .tabItem {
-                    Image(systemName: "hands.and.sparkles.fill")
-                        .symbolRenderingMode(.monochrome)
-                    Text("Prayers")
-                }
-                .tag(4)
+                        
+//            PrayersScreen()
+//                .tabItem {
+//                    Image(systemName: "hands.and.sparkles.fill")
+//                        .symbolRenderingMode(.monochrome)
+//                    Text("Prayers")
+//                }
+//                .tag(4)
             
             ReadingsScreen()
                 .tabItem {
@@ -57,7 +60,3 @@ struct ContentView: View {
         }
     }
 }
-
-//#Preview { ContentView() }
-
-
